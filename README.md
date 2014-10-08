@@ -12,7 +12,7 @@ Instructions
 
 First, please install JAGS (Just Another Gibbs Sampler) here: http://mcmc-jags.sourceforge.net/
 
-Next, please use R version >=3.1.0 and install the package:
+Next, please use R version >=3.1.1 and install the package:
 
     # Install package
     install.packages("devtools")
