@@ -100,7 +100,7 @@ Plummer, M. 2012. JAGS Version 3.3.0 user manual. http://mcmc-jags.sourceforge.n
 
 Thorson, J.T., I. Stewart, and A.E. Punt.  2011. Accounting for fish shoals in single- and multi-species survey data using mixture distribution models.  Can. J. Fish. Aquat. Sci., 68(9): 1681-1693.
 
-Thorson, J.T. and E.J. Ward. 2013. Accounting for space–time interactions in index standardization models. Fisheries Research, 147: 426-433.
+Thorson, J.T. and E.J. Ward. 2013. Accounting for space-time interactions in index standardization models. Fisheries Research, 147: 426-433.
 }
 \author{
 %%  ~~who you are~~
