@@ -94,7 +94,7 @@ fitDeltaGLM(modelStructure = list(StrataYear.positiveTows = "random", VesselYear
 %% ~put references to the literature/web site here ~
 Gelman, A. 2006. Prior distributions for variance parameters in hierarchical models. Bayesian analysis, 1(3):515-533.
 
-Gelman, A., D.A. Van Dyk, Z. Huang, and W.J. Boscardin. 2007. Using redundant parameterizations to fit hierarchical models. Journal of Computational and Graphical Statistics, 17(1), 95–122.
+Gelman, A., D.A. Van Dyk, Z. Huang, and W.J. Boscardin. 2007. Using redundant parameterizations to fit hierarchical models. Journal of Computational and Graphical Statistics, 17(1), 95-122.
 
 Plummer, M. 2012. JAGS Version 3.3.0 user manual. http://mcmc-jags.sourceforge.net/
 
