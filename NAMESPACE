@@ -1,0 +1,6 @@
+#exportPattern("^[[:alpha:]]+")
+
+exportPattern(".")
+
+#import(R2jags)
+
