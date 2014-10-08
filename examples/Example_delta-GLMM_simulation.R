@@ -9,7 +9,9 @@ install.packages('statmod')
 install.packages('superdiag')
 
 # Install package
-install.packages("nwfscDeltaGLM", repos="http://R-Forge.R-project.org", type="source")
+install.packages("devtools")
+library("devtools")
+install_github("nwfsc-assess/nwfscDeltaGLM")
 
 # Load package
 library(nwfscDeltaGLM)
