@@ -25,7 +25,7 @@ Eric J Ward
 Maintainer: Eric Ward <eric.ward@noaa.gov>
 }
 \references{
-Thorson, J.T. and E.J. Ward. 2013. Accounting for space–time interactions in index standardization models. Fisheries Research, 147, 426:433. 
+Thorson, J.T. and E.J. Ward. 2013. Accounting for space-time interactions in index standardization models. Fisheries Research, 147, 426:433. 
 }
 \keyword{ package }
 \seealso{
