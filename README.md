@@ -5,7 +5,7 @@ Bayesian stratified delta-GLMM software for standardizing fishery-independent in
 
 Please install using:
 
-# Install dependencies
+/ Install dependencies
 install.packages('rjags')
 install.packages('R2jags')
 install.packages('pscl')
@@ -13,12 +13,12 @@ install.packages('runjags')
 install.packages('statmod')
 install.packages('superdiag')
 
-# Install package
+/ Install package
 install.packages("devtools")
 library("devtools")
 install_github("nwfsc-assess/nwfscDeltaGLM")
   
-# Load package
+/ Load package
 library(nwfscDeltaGLM)
 
 
