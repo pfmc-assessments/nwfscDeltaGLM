@@ -1,9 +1,18 @@
-nwfscDeltaGLM
+Description
 =============
 
-Bayesian stratified delta-GLMM software for standardizing fishery-independent index data for U.S. West Coast.
+nwfscDeltaGLM
+* Is an R package for implementing a Bayesian stratified delta-GLMM for use when standardizing fishery-independent index data for U.S. West Coast.
+* Has built in diagnostic functions and model-comparison tools
+* Is intended to improve analysis spead, replicability, peer-review, and interpretation of index standardization methods
 
-Please use R version >=3.1.0 and install using:
+
+Instructions
+=============
+
+First, please install JAGS (Just Another Gibbs Sampler) here: http://mcmc-jags.sourceforge.net/
+
+Next, please use R version >=3.1.0 and install the package:
 
     # Install package
     install.packages("devtools")
@@ -14,7 +23,7 @@ Please use R version >=3.1.0 and install using:
 
 Please see examples folder (i.e., https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/examples/Example_delta-GLMM.R) for an example of how to run the model.
 
-References
+Further reading
 =============
 For more details please see:
 * Thorson, J. T., I. Stewart, and A. Punt. 2011. Accounting for fish shoals in single- and multi-species survey data using mixture distribution models. Canadian Journal of Fisheries and Aquatic Sciences 68:1681–1693.
