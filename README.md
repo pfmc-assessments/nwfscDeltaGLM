@@ -23,6 +23,11 @@ Next, please use R version >=3.1.1 and install the package:
 
 Please see examples folder (i.e., https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/examples/Example_delta-GLMM.R) for an example of how to run the model.
 
+Known installation/usage issues
+=============
+Please read the following list of known problems and solutions
+* Users sometimes have trouble loading the package, with R throwing an error about package "rjags".  Please reinstall the latest version of JAGS and then re-install nwfscDeltaGLM
+
 Further reading
 =============
 The user manual (which may not include all current features) can found here:
