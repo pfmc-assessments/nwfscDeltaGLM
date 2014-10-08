@@ -2,9 +2,9 @@ Description
 =============
 
 nwfscDeltaGLM
-* Is an R package for implementing a Bayesian stratified delta-GLMM for use when standardizing fishery-independent index data for U.S. West Coast.
+* Is an R package for implementing a Bayesian stratified delta-GLMM for use when standardizing fishery-independent index data for U.S. West Coast surveys.
 * Has built in diagnostic functions and model-comparison tools
-* Is intended to improve analysis spead, replicability, peer-review, and interpretation of index standardization methods
+* Is intended to improve analysis speed, replicability, peer-review, and interpretation of index standardization methods
 
 
 Instructions
