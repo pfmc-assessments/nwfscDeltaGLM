@@ -1,13 +1,5 @@
 
 
-# Install dependencies
-install.packages('rjags')
-install.packages('R2jags')
-install.packages('pscl')
-install.packages('runjags')
-install.packages('statmod')
-install.packages('superdiag')
-
 # Install package
 install.packages("devtools")
 library("devtools")
