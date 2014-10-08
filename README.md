@@ -14,7 +14,8 @@ Please use R version >=3.1.0 and install using:
 
 Please see examples folder (i.e., https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/examples/Example_delta-GLMM.R) for an example of how to run the model.
 
-/ References
+References
+=============
 For more details please see:
 * Thorson, J. T., I. Stewart, and A. Punt. 2011. Accounting for fish shoals in single- and multi-species survey data using mixture distribution models. Canadian Journal of Fisheries and Aquatic Sciences 68:1681–1693.
 * Thorson, J. T., I. J. Stewart, and A. E. Punt. 2012. Development and application of an agent-based model to evaluate methods for estimating relative abundance indices for shoaling fish such as Pacific rockfish (Sebastes spp.). ICES Journal of Marine Science 69:635–647.
