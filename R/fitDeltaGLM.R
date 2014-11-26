@@ -464,10 +464,10 @@ fitDeltaGLM = function(modelStructure = list("StrataYear.positiveTows" = "random
     
     capture.output(jags.data, file="jags_data.txt")
     if(Parallel==TRUE) {
-      modelFit= jags.parallel(jags.data, inits = NULL, parameters.to.save= jags.params, model.file=model.name, n.chains = mcmc.control$chains, n.burnin = mcmc.control$burn, n.thin = mcmc.control$thin, n.iter = as.numeric(mcmc.control$burn+mcmc.control$iterToSave), DIC = TRUE)
+      modelFit= suppressWarnings(jags.parallel(jags.data, inits = NULL, parameters.to.save= jags.params, model.file=model.name, n.chains = mcmc.control$chains, n.burnin = mcmc.control$burn, n.thin = mcmc.control$thin, n.iter = as.numeric(mcmc.control$burn+mcmc.control$iterToSave), DIC = TRUE))
     }
     if(Parallel==FALSE) {
-      modelFit = jags(jags.data, inits = NULL, parameters.to.save= jags.params, model.file=model.name, n.chains = mcmc.control$chains, n.burnin = mcmc.control$burn, n.thin = mcmc.control$thin, n.iter = as.numeric(mcmc.control$burn+mcmc.control$iterToSave), DIC = TRUE)
+      modelFit = suppressWarnings(jags(jags.data, inits = NULL, parameters.to.save= jags.params, model.file=model.name, n.chains = mcmc.control$chains, n.burnin = mcmc.control$burn, n.thin = mcmc.control$thin, n.iter = as.numeric(mcmc.control$burn+mcmc.control$iterToSave), DIC = TRUE))
     }
   }
   
