@@ -112,6 +112,13 @@ doMCMCDiags = function(directory, mods, StrataWeights="StrataAreas", McmcDiagnos
     matplot(cbind(McmcIndices$Results2[,c('IndexMedian','Raw')], MleIndices$Results2$Index), col=c("black","red","blue"), lty="solid", type="l", xlab="Strata and/or Year", ylab="Index or component",main="Year Index", ylim=c(0,max(cbind(McmcIndices$Results2[,c('IndexMedian','Raw')], MleIndices$Results2$Index),na.rm=TRUE)))
     dev.off()
 
+    # Make easier to read version
+    jpeg(paste(Folder,"/","","Index_with_95CI.jpg",sep=""),width=4,height=4,res=200,units="in")
+    par(mfrow=c(1,1), mar=c(2.5,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02)
+    plot(McmcIndices$Results2[,'IndexMedian'], col="black", xlab="Year", ylab="Index",main="Year Index", ylim=c(0,max(McmcIndices$Results2[,'IndexMedian']*exp(1.96*McmcIndices$Results2[,'SdLog']),na.rm=TRUE)))
+    for(i in 1:nrow(McmcIndices$Results2)) lines( x=rep(i,2), y=McmcIndices$Results2[i,'IndexMedian']*exp(c(-1.96,1.96)*McmcIndices$Results2[i,'SdLog']), col="red")
+    dev.off()
+
     # Save McmcIndices and CV
     Indices[,ModelNumber,1] = McmcIndices$Results2$IndexMean
     Indices[,ModelNumber,2] = McmcIndices$Results2$SdLog
