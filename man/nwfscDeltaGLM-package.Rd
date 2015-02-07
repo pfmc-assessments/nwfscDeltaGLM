@@ -17,7 +17,6 @@ Version: \tab 1.0\cr
 Date: \tab 2013-12-05\cr
 License: \tab What license is it under?\cr
 }
-~~ An overview of how to use the package, including the most important functions ~~
 }
 \author{
 Eric J Ward
