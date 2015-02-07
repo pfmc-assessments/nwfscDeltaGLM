@@ -3,7 +3,7 @@
 # Install package
 install.packages("devtools")
 library("devtools")
-install_github("nwfsc-assess/nwfscDeltaGLM")
+install_github("nwfsc-assess/nwfscDeltaGLM", ref="1.0.0")
   
 # Load package
 library(nwfscDeltaGLM)

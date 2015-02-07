@@ -1,15 +1,9 @@
 
 
-# Install dependencies
-install.packages('rjags')
-install.packages('R2jags')
-install.packages('pscl')
-install.packages('runjags')
-install.packages('statmod')
-install.packages('superdiag')
-
 # Install package
-install.packages("nwfscDeltaGLM", repos="http://R-Forge.R-project.org")
+install.packages("devtools")
+library("devtools")
+install_github("nwfsc-assess/nwfscDeltaGLM", ref="1.0.0")
 
 # Load package
 library(nwfscDeltaGLM)
