@@ -7,9 +7,8 @@ doMCMCDiags = function(datalist, directory, mods, StrataWeights="StrataAreas", M
   on.exit( detach(datalist) )  
   
   # Load data locally
-    attach(Data)
-    on.exit( detach(Data) )
-  }
+  attach(Data)
+  on.exit( detach(Data) )
 
   # Identify strata and year for StratYear values
   StrataTable = data.frame( 'strataYear'=levels(strataYear), 'strata'=sapply(levels(strataYear),FUN=function(Char){strsplit(Char,":")[[1]][1]}), 'year'=sapply(levels(strataYear),FUN=function(Char){strsplit(Char,":")[[1]][2]}), 'Area_Hectares'=rep(NA,nlevels(strataYear)))
