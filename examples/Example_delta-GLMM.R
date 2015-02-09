@@ -29,7 +29,7 @@ species = "Example_Species"
 names(masterDat)[9] = species
 
 # Preliminary data processing
-processData()
+DataList = processData()
 
 # Define settings
 mcmc.control = list(chains=2, thin=1, burnin=1e3, iterToSave=1e3)
@@ -38,7 +38,7 @@ modelStructure1 = list("StrataYear.positiveTows"="fixed", "VesselYear.positiveTo
 
 # Define models
 mods = list()
-mods[[1]] = fitDeltaGLM(modelStructure=modelStructure1, mcmc.control=mcmc.control,Parallel=Parallel, Species=species)
+mods[[1]] = fitDeltaGLM(datalist=DataList, modelStructure=modelStructure1, mcmc.control=mcmc.control,Parallel=Parallel, Species=species)
 
 # Process MCMC output
 # Make sure that Data is attached prior to running
