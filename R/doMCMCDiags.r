@@ -1,9 +1,12 @@
 ########################################################
 ####### This block of code is related to processing output
-doMCMCDiags = function(directory, mods, StrataWeights="StrataAreas", McmcDiagnostics=FALSE) {
+doMCMCDiags = function(datalist, directory, mods, StrataWeights="StrataAreas", McmcDiagnostics=FALSE) {
 
+  # Load tagged list of data
+  attach(datalist)
+  on.exit( detach(datalist) )  
+  
   # Load data locally
-  if( !("Data" %in% search()) ){
     attach(Data)
     on.exit( detach(Data) )
   }

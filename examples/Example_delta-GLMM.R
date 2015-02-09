@@ -38,9 +38,8 @@ modelStructure1 = list("StrataYear.positiveTows"="fixed", "VesselYear.positiveTo
 
 # Define models
 mods = list()
-mods[[1]] = fitDeltaGLM(datalist=DataList, modelStructure=modelStructure1, mcmc.control=mcmc.control,Parallel=Parallel, Species=species)
+mods[[1]] = fitDeltaGLM(datalist=DataList, modelStructure=modelStructure1, mcmc.control=mcmc.control, Parallel=Parallel, Species=species)
 
 # Process MCMC output
-# Make sure that Data is attached prior to running
 data(SA3)
-doMCMCDiags(my.wd,mods)
+doMCMCDiags(datalist=DataList, directory=my.wd, mods=mods)
