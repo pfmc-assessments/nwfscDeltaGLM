@@ -17,9 +17,9 @@ Next, please use R version >=3.1.1 and install the package:
     # Install package
     install.packages("devtools")
     library("devtools")
-    install_github("nwfsc-assess/nwfscDeltaGLM")
+    install_github("nwfsc-assess/nwfscDeltaGLM", ref="1.0.0") # This should reflect the latest formal release
     # Load package
-    library(nwfscDeltaGLM, ref="1.0.0") # This should reflect the latest formal release
+    library(nwfscDeltaGLM) 
 
 Please see examples folder (i.e., https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/examples/Example_delta-GLMM.R) for an example of how to run the model.
 
