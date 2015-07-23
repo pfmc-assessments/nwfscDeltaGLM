@@ -78,7 +78,7 @@ ComputeIndices = function(Data, Model, FileName, maxDims=6, Folder=NA, Weights="
       RawCV[YearI,StratI] = sqrt( RawVarWeighted[YearI,StratI] ) / RawWeighted[YearI,StratI] 
     }
     # CV of median (from J. Wallace "Survey.Biomass.GlmmBUGS.ver.3.00.r")
-    # Temp = Area[YearI,StratI] * rowSums( cMx(Chains[, YearI, ,1]) * cMx(Chains[,YearI,,2]) )  # By using StratI outside of the Strata loop only the final area estimate is obained.
+    # Temp = Area[YearI,StratI] * rowSums( cMx(Chains[, YearI, ,1]) * cMx(Chains[,YearI,,2]) )  # By using StratI outside of the Strata loop only the final area estimate is obtained.
     Temp = rowSums(t(Area[YearI, ] * t(cMx(Chains[, YearI, ,1]) * cMx(Chains[, YearI, , 2]))))  # In R, straight multiplation ("*") of a vector times a matrix is applied by row, hence the double transpose.
     CvMedianYear[YearI] = sqrt(var(Temp)) / median(Temp)
     # SD of log of index (from J. Wallace "Survey.Biomass.GlmmBUGS.ver.3.00.r")
