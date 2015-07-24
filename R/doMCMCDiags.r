@@ -38,7 +38,7 @@ doMCMCDiags = function(datalist, strata.limits=strata.limits, directory, mods, S
   # Plot data by year, depth, and latitude
   PlotData(Data=Data, FileName="", Folder=SpeciesFolder)
   # Plot location of data
-  MapData(Data=Data, strata.limits=strata.limits, SA3=SA3, FileName="", Folder=SpeciesFolder)
+  MapData(Data=Data, strata.limits=strata.limits, SA=SA3, Folder=SpeciesFolder)
   # Save mods for later usage
   Save = list(mods=mods, Data=Data)
   save(Save, file=paste(SpeciesFolder,"Save.RData",sep=""))
