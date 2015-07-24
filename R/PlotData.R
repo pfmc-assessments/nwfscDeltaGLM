@@ -1,118 +1,51 @@
 ##########
-# Plot data
+# Plot tows on a map
 ##########
-PlotData = function(Data, FileName, Folder=NA){
+MapData = function(Data, strata.limits = strata.limits, SA = SA3, FileName = "Rplot%03d.jpg", Folder = NULL){
   
-  if(is.na(Folder)) Folder = getwd()
+  # Distilled from line 426-539 of "Survey.Biomass.GlmmBUGS.ver.3.00.R" from John Wallace's code
+
+  if(!is.null(Folder))
+      jpeg(file=paste(Folder,FileName,"TowMap.jpg",sep=""),width=8,height=8,res=200,units="in")
   
-  Data = cbind(Data, 'Pres'=ifelse(Data[,'HAUL_WT_KG']>0,1,0))
-  Pos = Data[which(Data[,'HAUL_WT_KG']>0),]
-  Nyears = length(unique(Data[,'PROJECT_CYCLE']))
+  # Draw box
+  plot(c(-55, -1280), c(32, 50.5), xlab = "Depth (m)", ylab = "Latitude", xlim=c(-1280, -55), ylim=c(32, 49), type = "n")
+  abline(v= -unique(c(SA$MIN_DEPTH_M, SA$MAX_DEPTH_M)), h=unique(c(SA$MIN_LAT_DD, SA$MAX_LAT_DD)), col="grey78")
+  abline(h=34.5, v=-c(30, 100, 300, 700)*1.8288, col='red')
   
-  # Histogram of positive catch | year
-  Ncol = ceiling(sqrt(Nyears)); Nrow = ceiling(Nyears/Ncol)
-  jpeg(paste(Folder,FileName,"Positive catch BY Year.jpg",sep=""),width=Ncol*3,height=Nrow*3,units="in",res=200)
-  par(mfrow=c(Nrow,Ncol), mar=c(2,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02, oma=c(4,4,0,0))
-  for(YearI in 1:Nyears){
-    Which = which(Pos[,'PROJECT_CYCLE']==unique(Pos[,'PROJECT_CYCLE'])[YearI])
-    hist(Pos[Which,'HAUL_WT_KG'],main=unique(Pos[,'PROJECT_CYCLE'])[YearI], xlab="", ylab="", breaks=seq(0,max(Pos[,'HAUL_WT_KG'])+1,length=100), cex.main=1.5)
-  }  
-  mtext("Positive catch rates",outer=TRUE,line=2,side=1,cex=2)
-  mtext("Frequency",outer=TRUE,line=2,side=2,cex=2)
-  dev.off()
+  # Draw centroid of bins
+  avelat <- apply(cbind(SA$MIN_LAT_DD, SA$MAX_LAT_DD), 1, mean)
+  avedep <- apply(cbind(SA$MIN_DEPTH_M, SA$MAX_DEPTH_M), 1, mean)
+  points(-avedep, avelat, cex=0.5)
   
-  # Scatterplot of positive catch by depth
-  Ncol = Nrow = 1
-  jpeg(paste(Folder,FileName,"Positive catch and depth.jpg",sep=""),width=Ncol*4,height=Nrow*4,units="in",res=200)
-  par(mar=c(2,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02)
-  Y = Pos[,'HAUL_WT_KG']
-  plot(x=Pos[,'BEST_DEPTH_M'], y=ifelse(Y==0,NA,Y), log="y", main="Positive catch by depth", xlab="Depth", ylab="Positive catch rates", pch=20, col=rgb(0,0,0,alpha=0.2))
-  lines(lowess(x=Pos[,'BEST_DEPTH_M'], y=ifelse(Y==0,NA,Y)), lwd=2)
-  dev.off()  
+  # Label areas
+  text(-1235, 34.7, "Starting in 2004 NWFSC survey sampling density changes at Pt. Conception (34.5)", adj=0, col='red')
+  text(-1235, 49.25, "INPFC Areas", adj=0, col='blue')
+  abline(h=c(32, 36, 40.5, 43, 47.5), col='blue')
+  text(-1235, 33.25, "Conception", adj=0, col='blue')
+  text(-1235, 38.25, "Monterey", adj=0, col='blue')
+  text(-1235, 41.75, "Eureka", adj=0, col='blue')
+  text(-1235, 44.5, "Columbia", adj=0, col='blue')
+  text(-1235, 48.25, "Vancouver", adj=0, col='blue')
   
-  # Scatterplot of positive catch by depth | Year
-  Ncol = ceiling(sqrt(Nyears)); Nrow = ceiling(Nyears/Ncol)
-  jpeg(paste(Folder,FileName,"Positive catch and depth BY Year.jpg",sep=""),width=Ncol*3,height=Nrow*3,units="in",res=200)
-  par(mfrow=c(Nrow,Ncol), mar=c(2,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02, oma=c(4,4,0,0))
-  for(YearI in 1:Nyears){
-    Which = which(Pos[,'PROJECT_CYCLE']==unique(Pos[,'PROJECT_CYCLE'])[YearI])
-    Y = Pos[Which,'HAUL_WT_KG']
-    plot(x=Pos[Which,'BEST_DEPTH_M'], y=ifelse(Y==0,NA,Y), log="y", main=unique(Pos[,'PROJECT_CYCLE'])[YearI], xlab="", ylab="", pch=20, col=rgb(0,0,0,alpha=0.2))
-    lines(lowess(x=Pos[Which,'BEST_DEPTH_M'], y=ifelse(Y==0,NA,Y)), lwd=2)
-  }  
-  mtext("Depth",outer=TRUE,line=2,side=1,cex=2)
-  mtext("Positive catch rates",outer=TRUE,line=2,side=2,cex=2)
-  dev.off()
-  # Line 405 from John Wallace's "Survey.Biomass.GlmmBUGS.ver.3.00.R"
-  #xyplot(ifelse(HAUL_WT_KG==0,min(HAUL_WT_KG[HAUL_WT_KG!=0])/2,HAUL_WT_KG) ~ BEST_DEPTH_M | factor(PROJECT_CYCLE), data=Data, ylab = "Log of Weight (kg)", xlab="Depth (m)")
-  
-  # Scatterplot of positive catch by lattitude
-  Ncol = Nrow = 1
-  jpeg(paste(Folder,FileName,"Positive catch and latitude.jpg",sep=""),width=Ncol*4,height=Nrow*4,units="in",res=200)
-  par(mar=c(2,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02)
-  Y = Pos[,'HAUL_WT_KG']
-  plot(x=Pos[,'BEST_LAT_DD'], y=ifelse(Y==0,NA,Y), log="y", main="Positive catch by Latitude", xlab="Latitude", ylab="Positive catch rates", pch=20, col=rgb(0,0,0,alpha=0.2))
-  lines(lowess(x=Pos[,'BEST_LAT_DD'], y=ifelse(Y==0,NA,Y)), lwd=2)
-  dev.off()  
-  
-  # Scatterplot of positive catch by lattitude | Year
-  Ncol = ceiling(sqrt(Nyears)); Nrow = ceiling(Nyears/Ncol)
-  jpeg(paste(Folder,FileName,"Positive catch and latitude BY Year.jpg",sep=""),width=Ncol*3,height=Nrow*3,units="in",res=200)
-  par(mfrow=c(Nrow,Ncol), mar=c(2,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02, oma=c(4,4,0,0))
-  for(YearI in 1:Nyears){
-    Which = which(Pos[,'PROJECT_CYCLE']==unique(Pos[,'PROJECT_CYCLE'])[YearI])
-    Y = Pos[Which,'HAUL_WT_KG']
-    plot(x=Pos[Which,'BEST_LAT_DD'], y=ifelse(Y==0,NA,Y), log="y", main=unique(Pos[,'PROJECT_CYCLE'])[YearI], xlab="", ylab="", pch=20, col=rgb(0,0,0,alpha=0.2))
-    lines(lowess(x=Pos[Which,'BEST_LAT_DD'], y=ifelse(Y==0,NA,Y)), lwd=2)
-  }  
-  mtext("Latitude",outer=TRUE,line=2,side=1,cex=2)
-  mtext("Positive catch rates",outer=TRUE,line=2,side=2,cex=2)
-  dev.off()
-  
-  # Bar graph of proportion positive by year
-  Ncol = Nrow = 1
-  jpeg(paste(Folder,FileName,"Presence and year.jpg",sep=""),width=Ncol*4,height=Nrow*4,units="in",res=200)
-  par(mar=c(2,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02)
-  SumPres = tapply(Data[,'Pres'],INDEX=Data[,'PROJECT_CYCLE'],FUN=sum,na.rm=TRUE)
-  SumAbs = tapply(1-Data[,'Pres'],INDEX=Data[,'PROJECT_CYCLE'],FUN=sum,na.rm=TRUE)
-  Prop = tapply(Data[,'Pres'],INDEX=Data[,'PROJECT_CYCLE'],FUN=mean,na.rm=TRUE)
-  #plot(x=unique(Data[,'PROJECT_CYCLE']), y=Prop, main="Presence/absence by year", xlab="Year", ylab="Proportion positive", pch=20, type="l", ylim=c(0,1))
-  barplot(Prop, , main="Presence/absence by year", xlab="Year", ylab="Proportion positive", ylim=c(0,1))
-  #barplot(-SumAbs, ylim=c(0,max(SumPres+SumAbs)),add=TRUE)
-  dev.off()  
-  
-  # Bar graph of proportion positive by 25 meter depth bins | Year
-  Ncol = ceiling(sqrt(Nyears)); Nrow = ceiling(Nyears/Ncol)
-  BinWidth = 50
-  jpeg(paste(Folder,FileName,"Presence and depth BY year.jpg",sep=""),width=Ncol*3,height=Nrow*3,units="in",res=200)
-  par(mfrow=c(Nrow,Ncol), mar=c(2,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02, oma=c(4,4,0,0))
-  for(YearI in 1:Nyears){
-    Which = which(Data[,'PROJECT_CYCLE']==unique(Data[,'PROJECT_CYCLE'])[YearI])
-    X = unique(BinWidth*floor(Data[Which,'BEST_DEPTH_M']/BinWidth))
-    Order = order(X)
-    Prop = tapply(Data[Which,'Pres'],INDEX=BinWidth*floor(Data[Which,'BEST_DEPTH_M']/BinWidth),FUN=mean,na.rm=TRUE)[Order]
-    #plot(x=X[Order], y=Prop, main=unique(Data[,'PROJECT_CYCLE'])[YearI], xlab="", ylab="", pch=20, type="l", ylim=c(0,1))
-    barplot(Prop, main=unique(Data[,'PROJECT_CYCLE'])[YearI], xlab="", ylab="", ylim=c(0,1))
+  # Plot strata
+  S = strata.limits
+  for (i in 1:nrow(S)) {
+    polygon(-c(S$MinDepth[i], S$MaxDepth[i] , S$MaxDepth[i], S$MinDepth[i]), c(S$SLat[i], S$SLat[i], S$NLat[i], S$NLat[i]), col = rainbow(nrow(S), alpha=0.3)[i])
+    text(-mean(c(S$MinDepth[i], S$MaxDepth[i])), mean(c(S$SLat[i], S$NLat[i])), S$STRATA[i], cex=1.2)
   }
-  mtext("Depth bin",outer=TRUE,line=2,side=1,cex=2)
-  mtext("Proportion positive",outer=TRUE,line=2,side=2,cex=2)
-  dev.off()  
   
-  # Bar graph of proportion positive by 1 degree latitude bins | Year
-  Ncol = ceiling(sqrt(Nyears)); Nrow = ceiling(Nyears/Ncol)
-  BinWidth = 1
-  jpeg(paste(Folder,FileName,"Presence and latitude BY year.jpg",sep=""),width=Ncol*3,height=Nrow*3,units="in",res=200)
-  par(mfrow=c(Nrow,Ncol), mar=c(2,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02, oma=c(4,4,0,0))
-  for(YearI in 1:Nyears){
-    Which = which(Data[,'PROJECT_CYCLE']==unique(Data[,'PROJECT_CYCLE'])[YearI])
-    X = unique(BinWidth*floor(Data[Which,'BEST_LAT_DD']/BinWidth))
-    Order = order(X)
-    Prop = tapply(Data[Which,'Pres'],INDEX=BinWidth*floor(Data[Which,'BEST_LAT_DD']/BinWidth),FUN=mean,na.rm=TRUE)[Order]
-    #plot(x=X[Order], y=Prop, main=unique(Data[,'PROJECT_CYCLE'])[YearI], xlab="", ylab="", pch=20, type="l", ylim=c(0,1))
-    barplot(Prop, main=unique(Data[,'PROJECT_CYCLE'])[YearI], xlab="", ylab="", ylim=c(0,1))
+  # Plot Absence tows
+  points(-Data$BEST_DEPTH_M[Data$HAUL_WT_KG==0], Data$BEST_LAT_DD[Data$HAUL_WT_KG==0], pch=16, cex=0.5, col=rgb(red=1,0,0,alpha=0.2))
+  
+  # Plot presence tows by year
+  DataPos <- Data[Data$HAUL_WT_KG > 0 & !is.na(Data$HAUL_WT_KG),] # Temp Sp.pos - redefined below
+  CU <- c("black", "green", "blue", "cyan", "purple", "grey", "orange", "hotpink", "brown", "darkolivegreen2" ,"darkslategrey",   "deepskyblue1"  , "violet", "cyan", "magenta", "lightsalmon", "gold")
+  for(i in 1:length(unique(DataPos$PROJECT_CYCLE))) {
+    Which = which(DataPos$PROJECT_CYCLE==unique(DataPos$PROJECT_CYCLE)[i])
+    points(-DataPos$BEST_DEPTH_M[Which], DataPos$BEST_LAT_DD[Which], pch=16, cex=0.5, col= CU[i])
   }
-  mtext("Latitude bin",outer=TRUE,line=2,side=1,cex=2)
-  mtext("Proportion positive",outer=TRUE,line=2,side=2,cex=2)
-  dev.off()  
-  
+
+  if(!is.null(Folder))
+  dev.off()
 }
