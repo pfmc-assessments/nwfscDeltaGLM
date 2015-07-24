@@ -91,14 +91,14 @@ processData = function(Truncate=0) {
   DataList[["R"]] = diag(2)
 
   # If the covariates aren't in the R environment, create them
-  if(!("X.bin" %in% ls(envir = .GlobalEnv))){
+  if(!("X.bin" %in% base::ls(envir = .GlobalEnv))){
     DataList[["X.bin"]] = matrix(NA, ncol=0, nrow=nrow(Data))
   }else{
     DataList[["X.bin"]] = X.bin
     if(length(Exclude_NoStratum) > 0) DataList[["X.bin"]] = DataList[["X.bin"]][-Exclude_NoStratum]
     if(length(Exclude_Missing) > 0) DataList[["X.bin"]] = DataList[["X.bin"]][-Exclude_Missing]
   }
-  if(!("X.pos" %in% ls(envir = .GlobalEnv))){
+  if(!("X.pos" %in% base::ls(envir = .GlobalEnv))){
     DataList[["X.pos"]] = matrix(NA, ncol=0, nrow=nrow(Data))
   }else{
     DataList[["X.pos"]] = X.pos
