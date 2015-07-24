@@ -1,6 +1,6 @@
 ########################################################
 ####### This block of code is related to processing output
-doMCMCDiags = function(datalist, directory, mods, StrataWeights="StrataAreas", McmcDiagnostics=FALSE) {
+doMCMCDiags = function(datalist, strata.limits=strata.limits, directory, mods, StrataWeights="StrataAreas", McmcDiagnostics=FALSE) {
 
   # Load tagged list of data
   attach(datalist)
@@ -8,10 +8,15 @@ doMCMCDiags = function(datalist, directory, mods, StrataWeights="StrataAreas", M
   
   # Load data locally
   attach(Data)
-  on.exit( detach(Data) )
+  on.exit( detach(Data), add = TRUE )
 
   # Identify strata and year for StratYear values
-  StrataTable = data.frame( 'strataYear'=levels(strataYear), 'strata'=sapply(levels(strataYear),FUN=function(Char){strsplit(Char,":")[[1]][1]}), 'year'=sapply(levels(strataYear),FUN=function(Char){strsplit(Char,":")[[1]][2]}), 'Area_Hectares'=rep(NA,nlevels(strataYear)))
+  StrataTable = data.frame(strataYear = levels(strataYear), 
+        strata = sapply(levels(strataYear), FUN = function(Char) {
+                   Split <- strsplit(Char, ":")[[1]]; paste(Split[-length(Split)], collapse=":")}), 
+          year = sapply(levels(strataYear), FUN = function(Char) {
+                    Split <- strsplit(Char, ":")[[1]]; Split[length(Split)]}), 
+                    Area_Hectares = rep(NA, nlevels(strataYear)))
   for(i in 1:nrow(StrataTable)){
     Row = which(strata.limits[,'STRATA']==StrataTable[i,'strata'])
     StrataTable[i,'Area_Hectares'] = sum(SA3[SA3[,'MAX_LAT_DD']<=strata.limits[Row,'NLat'] & SA3[,'MIN_LAT_DD']>=strata.limits[Row,'SLat'] & SA3[,'MIN_DEPTH_M']>=strata.limits[Row,'MinDepth'] & SA3[,'MAX_DEPTH_M']<=strata.limits[Row,'MaxDepth'],'AREA_HECTARES'])
@@ -42,7 +47,7 @@ doMCMCDiags = function(datalist, directory, mods, StrataWeights="StrataAreas", M
   #attach(Save)
 
   # Format data
-  ModelNumber = 1
+  out <- list()
   for(ModelNumber in 1:length(mods)){
 
     # Make folder
@@ -96,9 +101,11 @@ doMCMCDiags = function(datalist, directory, mods, StrataWeights="StrataAreas", M
     # Visualize the realized offset
     PlotOffset(Data=Data, BugsList=BugsList, FileName="", Folder=Folder)
     # Posterior predictive distribution for positive catches
-    PosteriorPredictive(Data=Data, Model=Model, FileName="", Folder=Folder)
+    WAIC <- PosteriorPredictive(Data=Data, Model=Model, FileName="", Folder=Folder)
     # JAGS indices of abundance
     McmcIndices = ComputeIndices(Data=Data, Model=Model, FileName="", Folder=Folder, Weights=StrataWeights, StrataTable=StrataTable)
+    out[[ifelse(is.null(names(mods)), ModelNumber, names(mods)[ModelNumber])]] <- list(resultsByYear = McmcIndices$resultsByYear, 
+               resultsByYearAndStrata = McmcIndices$resultsByYearAndStrata,  WAIC = WAIC)
     # MLE indices of abundance
     MleIndices = try(ComputeMleIndices(Data=Data, Model=Model, FileName="", Folder=Folder, Weights=StrataWeights, StrataTable=StrataTable, Run=TRUE), silent=TRUE)
     if(inherits(MleIndices, "try-error")==TRUE){
@@ -150,5 +157,5 @@ doMCMCDiags = function(datalist, directory, mods, StrataWeights="StrataAreas", M
     if(StratI==1) mtext(side=3, outer=FALSE, line=1, text="Index CV", cex=1.5)
   }
   dev.off()
-
+  invisible(out)
 }
