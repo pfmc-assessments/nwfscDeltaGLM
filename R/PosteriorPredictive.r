@@ -142,4 +142,5 @@ PosteriorPredictive = function(Data, Model, maxDims=6, FileName, Folder=NA){
   WAIC_2 = -2*llpd + 2*p_WAIC_2
   WAIC = matrix(c(llpd,llpd,p_WAIC_1,p_WAIC_2,WAIC_1,WAIC_2),byrow=FALSE,nrow=2,ncol=3, dimnames=list(c("Formula1","Formula2"),c("log_pointwise_predictive_density","effective parameters","WAIC")))
   write.csv( WAIC, file=paste(Folder,"/",FileName,"WAIC.csv",sep=""))
+  WAIC
 }
