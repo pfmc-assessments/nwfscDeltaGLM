@@ -124,7 +124,7 @@ ComputeIndices = function(Data, Model, FileName, maxDims=6, Folder=NA, Weights="
   write.csv(Results2,file=paste(Folder,"/",FileName,"ResultsByYear.csv",sep=""))
 
   # Return output
-  Return = list(Results1=Results1, Results2=Results2)
+  Return = list(resultsByYearAndStrata = Results1, resultsByYear = Results2)
   return(Return)
 }
 
