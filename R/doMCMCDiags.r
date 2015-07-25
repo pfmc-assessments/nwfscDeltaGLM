@@ -104,8 +104,8 @@ doMCMCDiags = function(datalist, strata.limits=strata.limits, directory, mods, S
     WAIC <- PosteriorPredictive(Data=Data, Model=Model, FileName="", Folder=Folder)
     # JAGS indices of abundance
     McmcIndices = ComputeIndices(Data=Data, Model=Model, FileName="", Folder=Folder, Weights=StrataWeights, StrataTable=StrataTable)
-    out[[ifelse(is.null(names(mods)), ModelNumber, names(mods)[ModelNumber])]] <- list(resultsByYear = McmcIndices$resultsByYear, 
-               resultsByYearAndStrata = McmcIndices$resultsByYearAndStrata,  WAIC = WAIC)
+    out[[ifelse(is.null(names(mods)), ModelNumber, names(mods)[ModelNumber])]] <- list(byYear = McmcIndices$byYear, 
+               byYearAndStrata = McmcIndices$byYearAndStrata,  WAIC = WAIC)
     # MLE indices of abundance
     MleIndices = try(ComputeMleIndices(Data=Data, Model=Model, FileName="", Folder=Folder, Weights=StrataWeights, StrataTable=StrataTable, Run=TRUE), silent=TRUE)
     if(inherits(MleIndices, "try-error")==TRUE){
@@ -115,26 +115,26 @@ doMCMCDiags = function(datalist, strata.limits=strata.limits, directory, mods, S
     # Compare JAGS and MLE
     jpeg(paste(Folder,"/","","Index_Comparison.jpg",sep=""),width=2*3,height=2*3,res=200,units="in")
     par(mfrow=c(2,2), mar=c(2.5,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02)
-    matplot(cbind(McmcIndices$Results1[,c('PresMedian','RawPres')], MleIndices$Results1$Pres), col=c("black","red","blue"), lty="solid", type="l", xlab="Strata and/or Year", ylab="Index or component",main="StrataYear Presence", ylim=c(0,max(cbind(McmcIndices$Results1[,c('PresMedian','RawPres')], MleIndices$Results1$Pres),na.rm=TRUE)))
-    matplot(cbind(McmcIndices$Results1[,c('PosMedian','RawPos')], MleIndices$Results1$Pos), col=c("black","red","blue"), lty="solid", type="l", xlab="Strata and/or Year", ylab="Index or component",main="StrataYear Positive catch", ylim=c(0,max(cbind(McmcIndices$Results1[,c('PosMedian','RawPos')], MleIndices$Results1$Pos),na.rm=TRUE)))
-    matplot(cbind(McmcIndices$Results1[,c('IndexMedian','Raw')], MleIndices$Results1$Index), col=c("black","red","blue"), lty="solid", type="l", xlab="Strata and/or Year", ylab="Index or component",main="StrataYear Index", ylim=c(0,max(cbind(McmcIndices$Results1[,c('IndexMedian','Raw')], MleIndices$Results1$Index),na.rm=TRUE)))
-    matplot(cbind(McmcIndices$Results2[,c('IndexMedian','Raw')], MleIndices$Results2$Index), col=c("black","red","blue"), lty="solid", type="l", xlab="Strata and/or Year", ylab="Index or component",main="Year Index", ylim=c(0,max(cbind(McmcIndices$Results2[,c('IndexMedian','Raw')], MleIndices$Results2$Index),na.rm=TRUE)))
+    matplot(cbind(McmcIndices$byYearAndStrata[,c('PresMedian','RawPres')], MleIndices$byYearAndStrata$Pres), col=c("black","red","blue"), lty="solid", type="l", xlab="Strata and/or Year", ylab="Index or component",main="StrataYear Presence", ylim=c(0,max(cbind(McmcIndices$byYearAndStrata[,c('PresMedian','RawPres')], MleIndices$byYearAndStrata$Pres),na.rm=TRUE)))
+    matplot(cbind(McmcIndices$byYearAndStrata[,c('PosMedian','RawPos')], MleIndices$byYearAndStrata$Pos), col=c("black","red","blue"), lty="solid", type="l", xlab="Strata and/or Year", ylab="Index or component",main="StrataYear Positive catch", ylim=c(0,max(cbind(McmcIndices$byYearAndStrata[,c('PosMedian','RawPos')], MleIndices$byYearAndStrata$Pos),na.rm=TRUE)))
+    matplot(cbind(McmcIndices$byYearAndStrata[,c('IndexMedian','Raw')], MleIndices$byYearAndStrata$Index), col=c("black","red","blue"), lty="solid", type="l", xlab="Strata and/or Year", ylab="Index or component",main="StrataYear Index", ylim=c(0,max(cbind(McmcIndices$byYearAndStrata[,c('IndexMedian','Raw')], MleIndices$byYearAndStrata$Index),na.rm=TRUE)))
+    matplot(cbind(McmcIndices$byYear[,c('IndexMedian','Raw')], MleIndices$byYear$Index), col=c("black","red","blue"), lty="solid", type="l", xlab="Strata and/or Year", ylab="Index or component",main="Year Index", ylim=c(0,max(cbind(McmcIndices$byYear[,c('IndexMedian','Raw')], MleIndices$byYear$Index),na.rm=TRUE)))
     dev.off()
 
     # Make easier to read version
     jpeg(paste(Folder,"/","","Index_with_95CI.jpg",sep=""),width=4,height=4,res=200,units="in")
     par(mfrow=c(1,1), mar=c(2.5,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02)
-    plot(McmcIndices$Results2[,'IndexMedian'], col="black", xlab="Year", ylab="Index",main="Year Index", ylim=c(0,max(McmcIndices$Results2[,'IndexMedian']*exp(1.96*McmcIndices$Results2[,'SdLog']),na.rm=TRUE)))
-    for(i in 1:nrow(McmcIndices$Results2)) lines( x=rep(i,2), y=McmcIndices$Results2[i,'IndexMedian']*exp(c(-1.96,1.96)*McmcIndices$Results2[i,'SdLog']), col="red")
+    plot(McmcIndices$byYear[,'IndexMedian'], col="black", xlab="Year", ylab="Index",main="Year Index", ylim=c(0,max(McmcIndices$byYear[,'IndexMedian']*exp(1.96*McmcIndices$byYear[,'SdLog']),na.rm=TRUE)))
+    for(i in 1:nrow(McmcIndices$byYear)) lines( x=rep(i,2), y=McmcIndices$byYear[i,'IndexMedian']*exp(c(-1.96,1.96)*McmcIndices$byYear[i,'SdLog']), col="red")
     dev.off()
 
     # Save McmcIndices and CV
-    Indices[,ModelNumber,1] = McmcIndices$Results2$IndexMean
-    Indices[,ModelNumber,2] = McmcIndices$Results2$SdLog
+    Indices[,ModelNumber,1] = McmcIndices$byYear$IndexMean
+    Indices[,ModelNumber,2] = McmcIndices$byYear$SdLog
     for(StratI in 1:nlevels(strata)){
-      Which = which(McmcIndices$Results1$Strata==levels(McmcIndices$Results1$Strata)[StratI])
-      IndicesByStrata[,StratI,ModelNumber,1] = McmcIndices$Results1$IndexMean[Which]
-      IndicesByStrata[,StratI,ModelNumber,2] = McmcIndices$Results1$SdLog[Which]
+      Which = which(McmcIndices$byYearAndStrata$Strata==levels(McmcIndices$byYearAndStrata$Strata)[StratI])
+      IndicesByStrata[,StratI,ModelNumber,1] = McmcIndices$byYearAndStrata$IndexMean[Which]
+      IndicesByStrata[,StratI,ModelNumber,2] = McmcIndices$byYearAndStrata$SdLog[Which]
     }
   }
 
