@@ -2,10 +2,10 @@
 \alias{MapData}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{MapData is function that makes a map by latitude / depth}
-\description{This function produces a plot called TowMap.jpg (originally designed by John Wallace), showing tows in strata by depth and latitude.
+\description{This function produces a plot (originally designed by John Wallace) showing tows in strata by depth and latitude. If a folder name is given a plot called TowMap.jpg is created.
 }
 \usage{
-MapData(Data, SA3, strata.limits, FileName, Folder,...)
+MapData(strata.limits = strata.limits, SA = SA3, FileName = "TowMap.jpg", Folder = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

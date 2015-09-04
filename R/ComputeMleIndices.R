@@ -77,5 +77,5 @@ ComputeMleIndices = function(Data, Model, FileName, Folder=NA, Weights="StrataAr
   #detach(Data)
   detach(Model$BUGSoutput$sims.list)
   
-  return(list(Results1=Results1, Results2=Results2))
+  return(list(byYearAndStrata = Results1, byYear = Results2))
 }    

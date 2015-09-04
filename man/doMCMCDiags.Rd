@@ -5,7 +5,7 @@
 \description{This function is a high level function to be called by the user, and implements all of the plotting, diagnostic, and output summaries available. It is applicable to one or more fitted model objects, stored in a list object.
 }
 \usage{
-doMCMCDiags(directory, mods, McmcDiagnostics=FALSE,...)
+doMCMCDiags(datalist, strata.limits=strata.limits, directory, mods, StrataWeights="StrataAreas", McmcDiagnostics=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
