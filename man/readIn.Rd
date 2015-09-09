@@ -2,7 +2,7 @@
 \alias{readIn}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{readIn...}
-\description{reads in columns / lines from the command window / screen}
+\description{reads in columns / lines from the command window / screen; written by J. Wallace}
 \usage{
 readIn(ncol, nlines,...)
 }

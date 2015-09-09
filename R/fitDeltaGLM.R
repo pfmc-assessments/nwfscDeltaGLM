@@ -37,7 +37,7 @@ fitDeltaGLM = function(datalist, modelStructure = list("StrataYear.positiveTows"
   # Load data locally
   if( !("Data" %in% search()) ){
     attach(Data)
-    on.exit( detach(Data) )
+    on.exit( detach(Data), add = TRUE )
   }
 
   if(modelStructure$Catchability.positiveTows%in%c("linear","quadratic") | modelStructure$Catchability.zeroTows%in%c("one","linear","quadratic")){

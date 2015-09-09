@@ -5,7 +5,7 @@
 \description{
   }
 \usage{
-ComputeIndices(Data, Model, FileName, Folder=NA, Weights="StrataAreas", StrataTable, Run=TRUE,...)
+ComputeIndices(Data, Model, FileName, maxDims=6, Folder=NA, Weights="StrataAreas", StrataTable, PlotStrataYearMcmc=TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,3 +19,4 @@ ComputeIndices(Data, Model, FileName, Folder=NA, Weights="StrataAreas", StrataTa
 }
 \value{}
 \seealso{}
+
