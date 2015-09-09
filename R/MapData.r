@@ -1,19 +1,21 @@
 ##########
 # Plot tows on a map
 ##########
-MapData = function(Data, SA3, strata.limits, FileName, Folder){
+MapData = function(Data, strata.limits = strata.limits, SA = SA3, FileName = "TowMap.jpg", Folder = NULL){
   
   # Distilled from line 426-539 of "Survey.Biomass.GlmmBUGS.ver.3.00.R" from John Wallace's code
-  jpeg(file=paste(Folder,FileName,"TowMap.jpg",sep=""),width=8,height=8,res=200,units="in")
+
+  if(!is.null(Folder))
+      jpeg(file=paste(Folder, FileName, sep=""), width=8,height=8,res=200,units="in")
   
   # Draw box
   plot(c(-55, -1280), c(32, 50.5), xlab = "Depth (m)", ylab = "Latitude", xlim=c(-1280, -55), ylim=c(32, 49), type = "n")
-  abline(v= -unique(c(SA3$MIN_DEPTH_M, SA3$MAX_DEPTH_M)), h=unique(c(SA3$MIN_LAT_DD, SA3$MAX_LAT_DD)), col="grey78")
+  abline(v= -unique(c(SA$MIN_DEPTH_M, SA$MAX_DEPTH_M)), h=unique(c(SA$MIN_LAT_DD, SA$MAX_LAT_DD)), col="grey78")
   abline(h=34.5, v=-c(30, 100, 300, 700)*1.8288, col='red')
   
   # Draw centroid of bins
-  avelat <- apply(cbind(SA3$MIN_LAT_DD, SA3$MAX_LAT_DD), 1, mean)
-  avedep <- apply(cbind(SA3$MIN_DEPTH_M, SA3$MAX_DEPTH_M), 1, mean)
+  avelat <- apply(cbind(SA$MIN_LAT_DD, SA$MAX_LAT_DD), 1, mean)
+  avedep <- apply(cbind(SA$MIN_DEPTH_M, SA$MAX_DEPTH_M), 1, mean)
   points(-avedep, avelat, cex=0.5)
   
   # Label areas
@@ -43,5 +45,7 @@ MapData = function(Data, SA3, strata.limits, FileName, Folder){
     Which = which(DataPos$PROJECT_CYCLE==unique(DataPos$PROJECT_CYCLE)[i])
     points(-DataPos$BEST_DEPTH_M[Which], DataPos$BEST_LAT_DD[Which], pch=16, cex=0.5, col= CU[i])
   }
+
+  if(!is.null(Folder))
   dev.off()
 }
