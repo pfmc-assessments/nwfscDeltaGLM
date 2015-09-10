@@ -104,13 +104,13 @@ doMCMCDiags = function(datalist, strata.limits=strata.limits, directory, mods, S
     WAIC <- PosteriorPredictive(Data=Data, Model=Model, FileName="", Folder=Folder)
     # JAGS indices of abundance
     McmcIndices = ComputeIndices(Data=Data, Model=Model, FileName="", Folder=Folder, Weights=StrataWeights, StrataTable=StrataTable)
-    out[[ifelse(is.null(names(mods)), ModelNumber, names(mods)[ModelNumber])]] <- list(byYear = McmcIndices$byYear, 
-               byYearAndStrata = McmcIndices$byYearAndStrata,  WAIC = WAIC)
     # MLE indices of abundance
     MleIndices = try(ComputeMleIndices(Data=Data, Model=Model, FileName="", Folder=Folder, Weights=StrataWeights, StrataTable=StrataTable, Run=TRUE), silent=TRUE)
     if(inherits(MleIndices, "try-error")==TRUE){
       MleIndices = ComputeMleIndices(Data=Data, Model=Model, FileName="", Folder=Folder, Weights=StrataWeights, StrataTable=StrataTable, Run=FALSE)
     }
+    out[[ifelse(is.null(names(mods)), ModelNumber, names(mods)[ModelNumber])]] <- list(MCMC.byYear = McmcIndices$byYear, 
+      MCMC.byYearAndStrata = McmcIndices$byYearAndStrata, MLE.byYear = MleIndices$byYear, MLE.byYearAndStrata = MleIndices$byYearAndStrata, WAIC = WAIC)
 
     # Compare JAGS and MLE
     jpeg(paste(Folder,"/","","Index_Comparison.jpg",sep=""),width=2*3,height=2*3,res=200,units="in")
