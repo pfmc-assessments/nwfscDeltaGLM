@@ -42,4 +42,6 @@ mods[[1]] = fitDeltaGLM(datalist=DataList, modelStructure=modelStructure1, mcmc.
 
 # Process MCMC output
 data(SA3)
-doMCMCDiags(datalist=DataList, directory=my.wd, mods=mods)
+doMCMCDiags(datalist=DataList, directory=my.wd, mods=mods) # Outputs figures, data, and WAIC (Watanabe-Akaike information criterion) to the subdirectory '_FinalDiagnostics' under 'my.wd'.
+Diags <- doMCMCDiags(datalist=DataList, directory=my.wd, mods=mods) # Same as above but also outputs the MLE and MCMC indices and WAIC to a list object in R
+
