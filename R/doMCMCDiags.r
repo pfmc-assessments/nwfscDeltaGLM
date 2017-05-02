@@ -23,8 +23,10 @@ doMCMCDiags = function(datalist, strata.limits, directory, mods, StrataWeights="
   on.exit( detach(datalist) )
 
   # Load data locally
-  attach(Data)
-  on.exit( detach(Data), add = TRUE )
+  if( !("Data" %in% search()) ){
+    attach(Data)
+    on.exit( detach(Data), add = TRUE )
+  }
 
   # Identify strata and year for StratYear values
   StrataTable = data.frame(strataYear = levels(strataYear),

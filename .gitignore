@@ -22,3 +22,9 @@ vignettes/Example_Species_FinalDiagnostics/Model=1/mcmc_control.txt
 vignettes/Example_Species_FinalDiagnostics/Model=1/Model_Structure.txt
 
 *.RData
+
+Example_Species_FinalDiagnostics/Model=1/mcmc_control.txt
+
+Example_Species_FinalDiagnostics/Model=1/BUGSoutput_summary.txt
+
+Example_Species_FinalDiagnostics/Model=1/Model_Structure.txt

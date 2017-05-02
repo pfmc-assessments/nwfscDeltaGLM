@@ -57,7 +57,4 @@ PlotOffset = function(Data, BugsList, maxDims=8, FileName, Folder=NA){
     dev.off()
   }
 
-  # Detach stuff
-  #detach(Data)
-  detach(BugsList)
 }

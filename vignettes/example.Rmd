@@ -13,7 +13,7 @@ vignette: >
 
 ```{r install}
 # Install package
-install.packages("devtools",repos = "http://cran.us.r-project.org")
+install.packages("devtools", repos = "http://cran.us.r-project.org")
 library("devtools")
 install_github("nwfsc-assess/nwfscDeltaGLM")
   
@@ -67,10 +67,10 @@ fitted_models[[1]] = fitDeltaGLM(datalist = DataList, modelStructure=modelStruct
 ```
 
 ## Process MCMC output
-```{r eval=FALSE}
+```{r mcmcdiag}
 # Make sure that Data is attached prior to running
 data(SA3)
-doMCMCDiags(datalist=DataList, raw_data = Data, mods=fitted_models, strata.limits=strata.limits)
+doMCMCDiags(datalist=DataList, mods=fitted_models, strata.limits=strata.limits)
 ```
 
 
