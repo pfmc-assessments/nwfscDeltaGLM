@@ -69,7 +69,7 @@ X.pos = matrix( rnorm(nrow(masterDat)*nX.pos, mean=0, sd=1), ncol=nX.pos)
 ## Run data processing function
 This looks for an object named \code{masterDat} in the global environment,
 ```{r}
-DataList = processData(strata.limits = strata.limits)
+DataList = processData(masterDat = masterDat, strata.limits = strata.limits, X.bin=X.bin, X.pos=X.pos)
 ```
 
 ## Run model

@@ -30,7 +30,7 @@ species = "Example_Species"
 names(masterDat)[which(names(masterDat)=="EXPANDED_WT_KG")] = species
 
 # Preliminary data processing
-DataList = processData(strata.limits=defaultLimits)
+DataList = processData(masterDat = masterDat, strata.limits=defaultLimits)
 
 # Define settings
 mcmc.control = list(chains=3, thin=1, burnin=500, iterToSave=1000)

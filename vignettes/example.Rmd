@@ -64,7 +64,7 @@ names(masterDat)[which(names(masterDat)=="EXPANDED_WT_KG")] = "Example_Species"
 ## Run data processing function
 This looks for an object named \code{masterDat} in the global environment,
 ```{r}
-DataList = processData(strata.limits = strata.limits)
+DataList = processData(masterDat = masterDat, strata.limits = strata.limits)
 ```
 
 ## Run model

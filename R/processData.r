@@ -1,14 +1,16 @@
 #' Process raw haul data
 #'
+#' @param masterDat Data frame with raw haul data
 #' @param Truncate Lower bound of hauls, defaults to 0. Values < Truncate will be turned to 0
 #' @param strata.limits Data frame of strata limits
-
+#' @param X.pos Optional matrix of covariates for the positive model, dimensioned as same rows as raw data
+#' @param X.bin Optional matrix of covariates for the presence-absence model, dimensioned as same rows as raw data
 #' @return DataList Data frame of processed data to fit
 #'
 #' @import grDevices
 #' @export
 #'
-processData = function(Truncate=0, strata.limits=NA) {
+processData = function(masterDat = NULL, Truncate=0, strata.limits=NULL, X.pos = NULL, X.bin = NULL) {
 
   print("Necessary column names for masterDat:")
   print("1. BEST_DEPTH_M -> tow depth in meters")
@@ -39,6 +41,23 @@ processData = function(Truncate=0, strata.limits=NA) {
     'year'=as.factor(masterDat[,'YEAR']),
     'effort'=masterDat[,'AREA_SWEPT_MSQ']*0.0001,
     'VESSEL'=masterDat[,'VESSEL'])
+
+  # Error checking for covariates
+  if(!is.null(X.pos)) {
+    if(!is.matrix(X.pos)) X.pos = matrix(X.pos, ncol=1)
+    if(nrow(X.pos)!= ) {
+      print("Error: covariate matrix for positive model input, but the rows do not match the rows of masterDat")
+      stop()
+    }
+  }
+  if(!is.null(X.bin)) {
+    if(!is.matrix(X.bin)) X.bin = matrix(X.bin, ncol=1)
+    if(nrow(X.bin)!= ) {
+      print("Error: covariate matrix for binomial model input, but the rows do not match the rows of masterDat")
+      stop()
+    }
+  }
+
   if(Truncate>0){
     print(paste("Changing any observation with less than ",Truncate," kilograms to 0 kilograms",sep=""))
     Data[,'HAUL_WT_KG'] = ifelse( Data[,'HAUL_WT_KG']<Truncate, 0, Data[,'HAUL_WT_KG'] )
@@ -103,14 +122,14 @@ processData = function(Truncate=0, strata.limits=NA) {
   DataList[["R"]] = diag(2)
 
   # If the covariates aren't in the R environment, create them
-  if(!("X.bin" %in% base::ls(envir = .GlobalEnv))){
+  if(is.null(X.bin)){
     DataList[["X.bin"]] = matrix(NA, ncol=0, nrow=nrow(Data))
   }else{
     DataList[["X.bin"]] = X.bin
     if(length(Exclude_NoStratum) > 0) DataList[["X.bin"]] = DataList[["X.bin"]][-Exclude_NoStratum]
     if(length(Exclude_Missing) > 0) DataList[["X.bin"]] = DataList[["X.bin"]][-Exclude_Missing]
   }
-  if(!("X.pos" %in% base::ls(envir = .GlobalEnv))){
+  if(is.null(X.pos)){
     DataList[["X.pos"]] = matrix(NA, ncol=0, nrow=nrow(Data))
   }else{
     DataList[["X.pos"]] = X.pos
