@@ -4,10 +4,12 @@
 \alias{processData}
 \title{Process raw haul data}
 \usage{
-processData(Truncate = 0)
+processData(Truncate = 0, strata.limits = NA)
 }
 \arguments{
 \item{Truncate}{Lower bound of hauls, defaults to 0. Values < Truncate will be turned to 0}
+
+\item{strata.limits}{Data frame of strata limits}
 }
 \value{
 DataList Data frame of processed data to fit
