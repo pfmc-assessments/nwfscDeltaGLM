@@ -1,21 +1,37 @@
-########################################################
-####### This block of code is related to processing output
-doMCMCDiags = function(datalist, strata.limits=strata.limits, directory, mods, StrataWeights="StrataAreas", McmcDiagnostics=FALSE) {
+#' This function is a high level function to be called by the user, and implements all of the plotting, diagnostic, and output summaries available. It is applicable to one or more fitted model objects, stored in a list object.
+#'
+#' @param datalist Data
+#' @param strata.limits limits of strata
+#' @param directory The directory to save output in
+#' @param mods A list of one or more fitted delta-GLMM model objects
+#' @param StrataWeights Weights, defaults to "StrataAreas", also can be "Equal"
+#' @param McmcDiagnostics Boolean indicating whether or not to make the MCMCdiagnostics plots, defaults to \code{FALSE}
+#'
+#' @return Returns a list of output, by year and by Strata:Year
+#'
+#' @seealso \code{\link{MapData}}, \code{\link{ConvergencePlot}}, \code{\link{McmcDiagnosticsPlot}}, \code{\link{PlotOffset}}, \code{\link{PosteriorPredictive}}, \code{\link{ComputeIndices}}, \code{\link{ComputeMleIndices}}
+#' @import R2jags
+#' @import stats
+#' @import utils
+#' @import grDevices
+#' @export
+#'
+doMCMCDiags = function(datalist, strata.limits, directory, mods, StrataWeights="StrataAreas", McmcDiagnostics=FALSE) {
 
   # Load tagged list of data
   attach(datalist)
-  on.exit( detach(datalist) )  
-  
+  on.exit( detach(datalist) )
+
   # Load data locally
   attach(Data)
   on.exit( detach(Data), add = TRUE )
 
   # Identify strata and year for StratYear values
-  StrataTable = data.frame(strataYear = levels(strataYear), 
+  StrataTable = data.frame(strataYear = levels(strataYear),
         strata = sapply(levels(strataYear), FUN = function(Char) {
-                   Split <- strsplit(Char, ":")[[1]]; paste(Split[-length(Split)], collapse=":")}), 
+                   Split <- strsplit(Char, ":")[[1]]; paste(Split[-length(Split)], collapse=":")}),
           year = sapply(levels(strataYear), FUN = function(Char) {
-                    Split <- strsplit(Char, ":")[[1]]; Split[length(Split)]}), 
+                    Split <- strsplit(Char, ":")[[1]]; Split[length(Split)]}),
                     Area_Hectares = rep(NA, nlevels(strataYear)))
   for(i in 1:nrow(StrataTable)){
     Row = which(strata.limits[,'STRATA']==StrataTable[i,'strata'])
@@ -109,7 +125,7 @@ doMCMCDiags = function(datalist, strata.limits=strata.limits, directory, mods, S
     if(inherits(MleIndices, "try-error")==TRUE){
       MleIndices = ComputeMleIndices(Data=Data, Model=Model, FileName="", Folder=Folder, Weights=StrataWeights, StrataTable=StrataTable, Run=FALSE)
     }
-    out[[ifelse(is.null(names(mods)), ModelNumber, names(mods)[ModelNumber])]] <- list(MCMC.byYear = McmcIndices$byYear, 
+    out[[ifelse(is.null(names(mods)), ModelNumber, names(mods)[ModelNumber])]] <- list(MCMC.byYear = McmcIndices$byYear,
       MCMC.byYearAndStrata = McmcIndices$byYearAndStrata, MLE.byYear = MleIndices$byYear, MLE.byYearAndStrata = MleIndices$byYearAndStrata, WAIC = WAIC)
 
     # Compare JAGS and MLE

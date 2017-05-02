@@ -1,6 +1,13 @@
-####################
-# Function to calculate the correlations from the precision matrix
-####################
+#' Function to calculate the correlations from the precision matrix
+#'
+#' @param McmcArray The array of MCMC output
+#' @param Parameter The names of all parameters monitoried
+#' @param this.names The name of the parameter of interest
+#' @param Model The fitted model object
+#'
+#' @return Returns a list of output, by year and by Strata:Year
+#' @export
+#'
 corFunction = function(McmcArray, Parameter,this.names, Model) {
   nchains = dim(McmcArray)[2]
   cors = matrix(NA, nrow = dim(McmcArray)[1], ncol = nchains)

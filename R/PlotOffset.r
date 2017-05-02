@@ -1,11 +1,24 @@
+#' PlotOffset plots the positive and presence absence offset by strata
+#'
+#' @param Data The data frame with the raw survey data
+#' @param BugsList List of the fitted BUGS / JAGS object
+#' @param maxDims Max dimensions of grid (rows, columns). Defaults to 8
+#' @param FileName Name of the file(s) created
+#' @param Folder Where to put the output is to be stored, defaults to NA
+#'
+#' @import grDevices
+#' @import utils
+#' @export
+#'
 PlotOffset = function(Data, BugsList, maxDims=8, FileName, Folder=NA){
-  if(is.na(Folder)) Folder = paste(getwd(),"/",sep="")  
-  
+  if(is.na(Folder)) Folder = paste(getwd(),"/",sep="")
+
   # Attach stuff
   attach(BugsList)
+  on.exit( detach(BugsList) )
   #attach(Data)
   nonZeros = which(isNonZeroTrawl==TRUE)
-  
+
   # Positive offset
   LogEffortRange = seq(min(logeffort),max(logeffort),length=1000)
   Nstrat = length(unique(strataYear[nonZeros]))
@@ -24,7 +37,7 @@ PlotOffset = function(Data, BugsList, maxDims=8, FileName, Folder=NA){
     }
     dev.off()
   }
-  
+
   # Presence/Absence offset
   LogEffortRange = seq(min(logeffort),max(logeffort),length=1000)
   Nstrat = length(unique(strataYear[nonZeros]))
@@ -43,7 +56,7 @@ PlotOffset = function(Data, BugsList, maxDims=8, FileName, Folder=NA){
     }
     dev.off()
   }
-  
+
   # Detach stuff
   #detach(Data)
   detach(BugsList)

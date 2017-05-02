@@ -1,4 +1,12 @@
-
+#' Scan data
+#'
+#' @param ncol number of columns
+#' @param nlines Number of lines
+#' @param \\dots Additional arguments passed to the function
+#'
+#' @return data frame of data
+#' @export
+#'
 readIn <- function(ncol, nlines, ...) {
   x <- matrix(scan(,"", quiet=TRUE, nlines=nlines), ncol=ncol, byrow=TRUE)
   x <- as.data.frame(x, ..., stringsAsFactors = FALSE)

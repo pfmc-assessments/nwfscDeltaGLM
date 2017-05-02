@@ -1,14 +1,31 @@
-##########
-# Trace plots for each parameters
-##########
-ConvergencePlot = function(McmcArray, maxDims=8, parToMonitor, parnames, Nkeep=5000, FileName, Type="Trace", Folder=NA, Model){
-  
-  if(is.na(Folder)) Folder = paste(getwd(),"/",sep="")  
-  
+#' Compute MLE index of abundance
+#'
+#' @param McmcArray The array of MCMC output
+#' @param maxDims aesthetics argument for plot (dimensions of rows/columns), defaults to 8
+#' @param parToMonitor The parameters to be monitored
+#' @param parnames The names of parameters to be plotted
+#' @param Nkeep Number of parameter sets to save, defaults to 5000
+#' @param FileName The name of the file/directory
+#' @param Type Type of plot - defaults to "Trace", alternative is "ACF"
+#' @param Folder Optional argument for named folder to store results (in current working directory)
+#' @param Model The fitted model object
+#'
+#' @return Returns a list of output, by year and by Strata:Year
+#' @import R2jags
+#' @import stats
+#' @import utils
+#' @import grDevices
+#' @export
+#'
+ConvergencePlot = function(McmcArray, maxDims=8, parToMonitor,
+  parnames, Nkeep=5000, FileName, Type="Trace", Folder=NA, Model){
+
+  if(is.na(Folder)) Folder = paste(getwd(),"/",sep="")
+
   Nparam = length(parToMonitor)
   Nplots = ceiling( Nparam / maxDims^2 )
   KeepSet = seq(1,dim(McmcArray)[1],length=min(dim(McmcArray)[1],Nkeep))
-  
+
   if(Type%in%c("Trace","ACF")){
     for(PlotI in 1:Nplots){
       ParSet = (PlotI-1)*maxDims^2 + 1:min(Nparam-(PlotI-1)*maxDims^2,maxDims^2)
@@ -22,16 +39,16 @@ ConvergencePlot = function(McmcArray, maxDims=8, parToMonitor, parnames, Nkeep=5
         }
         if(Type=="ACF"){
           Acf = apply(McmcArray[KeepSet,,parToMonitor[ParSet[ParI]],drop=FALSE],MARGIN=2,FUN=function(Vec){acf(Vec,plot=FALSE)$acf})
-          if(!any(is.na(Acf))){ 
+          if(!any(is.na(Acf))){
             matplot(Acf, type="h", lty="solid", col=rainbow(dim(McmcArray)[2],alpha=0.4), main=parnames[ParSet[ParI]], xaxt="n", xlab="",ylab="", ylim=c(0,1), lwd=2)
           }else{
             plot.new()
           }
-        } 
+        }
       } # ParI loop
       dev.off()
     } # PlotI loop
-  } 
+  }
   if(Type=="VarianceDensity"){
     ParSet = grep("sigma",parnames)
     Ncol=ceiling(sqrt(length(ParSet)))
@@ -39,14 +56,14 @@ ConvergencePlot = function(McmcArray, maxDims=8, parToMonitor, parnames, Nkeep=5
     jpeg(paste(Folder,FileName,"Variance_density.jpg",sep=""),width=Ncol*3,height=Nrow*3,units="in",res=200)
     par(mfrow=c(Nrow,Ncol), mar=c(2,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02)
     for(ParI in 1:length(ParSet)){
-      plot(x=-999,y=-999,,main=parnames[ParSet[ParI]],xlab="",ylab="",xlim=range(McmcArray[,,parToMonitor[ParSet[ParI]]]),ylim=c(0,10/diff(range(McmcArray[,,parToMonitor[ParSet[ParI]]])))) 
+      plot(x=-999,y=-999,,main=parnames[ParSet[ParI]],xlab="",ylab="",xlim=range(McmcArray[,,parToMonitor[ParSet[ParI]]]),ylim=c(0,10/diff(range(McmcArray[,,parToMonitor[ParSet[ParI]]]))))
       for(ChainI in 1:dim(McmcArray)[2]){
         lines(density(McmcArray[,ChainI,parToMonitor[ParSet[ParI]]]),col=rainbow(dim(McmcArray)[2],alpha=0.4)[ChainI])
       }
     }
     dev.off()
   }
-  
+
   if(Type=="CorrelationDensity"){
     ParSet = grep("Tau",parnames) # divide by 4 because we're only plotting correlation
     Ncol=ceiling(sqrt(length(ParSet)/4))
@@ -60,7 +77,7 @@ ConvergencePlot = function(McmcArray, maxDims=8, parToMonitor, parnames, Nkeep=5
         kept = kept + 1
         corMcmc[,,kept] = corFunction(McmcArray, Model$Parameter, corNames[i], Model)
         keptNames[kept] = corNames[i]
-      }    	
+      }
     }
     plotNames = c("Strata-Year","Vessel-Year","strata","year")
     jpeg(paste(Folder,FileName,"Correlation_density.jpg",sep=""),width=Ncol*3,height=Nrow*3,units="in",res=200)
@@ -72,10 +89,10 @@ ConvergencePlot = function(McmcArray, maxDims=8, parToMonitor, parnames, Nkeep=5
       for(chainI in 1:dim(McmcArray)[2]) {
         # for each chain, plot a separate density plot
         dens = density(corMcmc[,chainI,par],from=-1,to=1)
-        lines(dens$x, dens$y/sum(dens$y),col=rainbow(dim(McmcArray)[2],alpha=0.4)[chainI])    		
+        lines(dens$x, dens$y/sum(dens$y),col=rainbow(dim(McmcArray)[2],alpha=0.4)[chainI])
       }
     }
     dev.off()
   }
-  
+
 }

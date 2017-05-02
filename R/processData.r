@@ -1,7 +1,11 @@
-############################################################################
-# FUNCTION processData WRITTEN BY JIM THORSON & ERIC WARD, UPDATED 9/30/2012.
-# EMAIL: JAMES.THORSON@NOAA.GOV, ERIC.WARD@NOAA.GOV
-############################################################################
+#' Process raw haul data
+#'
+#' @param Truncate Lower bound of hauls, defaults to 0. Values < Truncate will be turned to 0
+#' @return DataList Data frame of processed data to fit
+#'
+#' @import grDevices
+#' @export
+#'
 processData = function(Truncate=0) {
 
   print("Necessary column names for masterDat:")

@@ -1,5 +1,22 @@
-
-SimSimple = function(MeanEncounter, Nyears=10, Nstrata=15, Nvessels=4, Obsperyear=175, sigmaV=rep(1,2), sigmaVY=rep(1,2), sigmaS=rep(1,2), sigmaY=rep(1,2), sigmaSY=rep(1,2), sigmaResid=1){
+#' Simulate data
+#'
+#' @param MeanEncounter mean encounter rate
+#' @param Nyears Number of years, defaults to 10
+#' @param Nstrata Number of strata, defaults to 15
+#' @param Nvessels Number of vessels, defaults to 4
+#' @param Obsperyear Data points per year, defaults to 175
+#' @param sigmaV Two element vector of standard deviations of vessel random effects, defaults to \code{c(1,1)}
+#' @param sigmaVY Two element vector of standard deviations of vessel-year random effects, defaults to \code{c(1,1)}
+#' @param sigmaS Two element vector of standard deviations of strata random effects, defaults to \code{c(1,1)}
+#' @param sigmaY Two element vector of standard deviations of year random effects, defaults to \code{c(1,1)}
+#' @param sigmaSY Two element vector of standard deviations of strata-year random effects, defaults to \code{c(1,1)}
+#' @param sigmaResid Residual sd, defaults to \code{1}
+#'
+#' @return List of simulated data
+#' @export
+SimSimple = function(MeanEncounter, Nyears=10, Nstrata=15, Nvessels=4, Obsperyear=175,
+  sigmaV=rep(1,2), sigmaVY=rep(1,2), sigmaS=rep(1,2), sigmaY=rep(1,2), sigmaSY=rep(1,2),
+  sigmaResid=1){
 
   # Simulate effects
   betaY = array( rnorm(Nyears*2,sd=sigmaY), dim=c(2,Nyears))
@@ -23,7 +40,7 @@ SimSimple = function(MeanEncounter, Nyears=10, Nstrata=15, Nvessels=4, Obsperyea
   DF = as.data.frame(DF)
   names(DF) = colnames(Data)
   DF = data.frame(DF, "BEST_DEPTH_M"=rep(1,Obsperyear), "BEST_LAT_DD"=DF[,'STRATUM'] )
-  
+
   Return = list( "DF"=DF, "betaY"=betaY, "betaS"=betaS, "betaSY"=betaSY, "betaV"=betaV, "betaVY"=betaVY )
   return(Return)
 }
