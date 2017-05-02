@@ -7,10 +7,9 @@ Authors@R: c(
     person(c("Eric", "J."), "Ward", email = "eric.ward@noaa.gov", 
       role = c("aut", "cre")),
     person(c("James", "T."), "Thorson", role = "aut"))
-Maintainer: Eric Ward <eric.ward@noaa.gov>, James Thorson <james.thorson@noaa.gov>
 Description: The nwfscDeltaGLM package provides a Bayesian framework for constructing CPUE indices out of stratified survey (or commercial) fisheries landings data. The model can also be applied to similarly stratified bycatch data. The model is very flexible, optionally allowing the incorporation of strata, year, and vessel effects, strata x year and vessel x year interactions, and fixed covariates. Several parameterization for including offsets (effort) are also included. Each of these can be included in the presence-absence (occupancy) model or the positive component of the delta-GLM model. 
 Depends: R (>= 3.1.0), R2jags
-License: GPL-3
+License: GPL (>=3)
 LazyData: true
 BuildVignettes: yes
 RoxygenNote: 6.0.1
@@ -19,3 +18,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/nwfsc-assess/nwfscDeltaGLM
+BugReports: https://github.com/nwfsc-assess/nwfscDeltaGLM/issues
