@@ -17,7 +17,10 @@ Next, please use R version >=3.1.1 and install the package:
     # Install package
     install.packages("devtools")
     library("devtools")
-    install_github("nwfsc-assess/nwfscDeltaGLM", ref="1.0.0") # This should reflect the latest formal release
+    # Current releases can be installed with
+    install_github("nwfsc-assess/nwfscDeltaGLM")
+    # Specific version can be installed as
+    # install_github("nwfsc-assess/nwfscDeltaGLM", ref="1.0.0") 
     # Load package
     library(nwfscDeltaGLM) 
 
