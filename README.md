@@ -24,7 +24,7 @@ Next, please use R version >=3.1.1 and install the package:
     # Load package
     library(nwfscDeltaGLM) 
 
-Please see examples folder (i.e., https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/examples/Example_delta-GLMM.R) for an example of how to run the model.
+Please see vignettes folder (i.e., https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/vignettes/example.Rmd) for an example of how to run the model. Or https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/vignettes/simulation_example.Rmd for an example of how to simulate and fit some different data structures. 
 
 Known installation/usage issues
 =============
