@@ -21,7 +21,7 @@ ComputeMleIndices = function(Data, Model, FileName, Folder=NA,
   if(is.na(Folder)) Folder = paste(getwd(),"/",sep="")
 
   # Attach stuff -- listed by search()
-  attach(Model$BUGSoutput$sims.list)
+  attach(Model$BUGSoutput$sims.list, warn.conflicts = FALSE)
   #attach(Data)
   modelStructure = Model$modelStructure
   Dist = Model$likelihood

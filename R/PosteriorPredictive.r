@@ -17,7 +17,7 @@ PosteriorPredictive = function(Data, Model, maxDims=6, FileName, Folder=NA){
   if(is.na(Folder)) Folder = paste(getwd(),"/",sep="")
 
   # Attach stuff
-  attach(Model$BUGSoutput$sims.list)
+  attach(Model$BUGSoutput$sims.list, warn.conflicts = FALSE)
   on.exit( detach(Model$BUGSoutput$sims.list) )
   Dist = Model$likelihood
   nonZeros = which(Data[,'isNonZeroTrawl']==TRUE)

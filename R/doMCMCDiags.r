@@ -19,12 +19,12 @@
 doMCMCDiags = function(datalist, strata.limits, directory, mods, StrataWeights="StrataAreas", McmcDiagnostics=FALSE) {
 
   # Load tagged list of data
-  attach(datalist)
+  attach(datalist, warn.conflicts = FALSE)
   on.exit( detach(datalist) )
 
   # Load data locally
   if( !("Data" %in% search()) ){
-    attach(Data)
+    attach(Data, warn.conflicts = FALSE)
     on.exit( detach(Data), add = TRUE )
   }
 

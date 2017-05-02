@@ -72,12 +72,12 @@ fitDeltaGLM = function(datalist=NULL, modelStructure =
   runif(1)
 
   # attach datalist
-  attach(datalist)
+  attach(datalist, warn.conflicts = FALSE)
   on.exit( detach(datalist) )
 
   # Load data locally
   if( !("Data" %in% search()) ){
-    attach(Data)
+    attach(Data, warn.conflicts = FALSE)
     on.exit( detach(Data), add = TRUE )
   }
 

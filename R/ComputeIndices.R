@@ -18,7 +18,7 @@ ComputeIndices = function(Data, Model, FileName, maxDims=6, Folder=NA,
   if(is.na(Folder)) Folder = paste(getwd(),"/",sep="")
 
   # Attach stuff -- listed by search()
-  attach(Model$BUGSoutput$sims.list)
+  attach(Model$BUGSoutput$sims.list, warn.conflicts = FALSE)
   on.exit( detach(Model$BUGSoutput$sims.list) )
   modelStructure = Model$modelStructure
   Dist = Model$likelihood
