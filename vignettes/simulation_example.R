@@ -46,7 +46,7 @@ X.bin = matrix( rnorm(nrow(masterDat)*nX.binomial, mean=0, sd=1), ncol=nX.binomi
 X.pos = matrix( rnorm(nrow(masterDat)*nX.pos, mean=0, sd=1), ncol=nX.pos)
 
 ## ------------------------------------------------------------------------
-DataList = processData(strata.limits = strata.limits)
+DataList = processData(masterDat = masterDat, strata.limits = strata.limits, X.bin=X.bin, X.pos=X.pos)
 
 ## ------------------------------------------------------------------------
 mcmc.control = list(chains=3, thin=1, burnin=100, iterToSave=200)

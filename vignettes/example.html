@@ -82,7 +82,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## (as 'lib' is unspecified)</code></pre>
 <pre><code>## 
 ## The downloaded binary packages are in
-##  /var/folders/sy/sprtrp7d08j74mcs4s1sgx9c006_07/T//RtmpdZ8Rl3/downloaded_packages</code></pre>
+##  /var/folders/sy/sprtrp7d08j74mcs4s1sgx9c006_07/T//RtmpnwDI9g/downloaded_packages</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;devtools&quot;</span>)
 <span class="kw">install_github</span>(<span class="st">&quot;nwfsc-assess/nwfscDeltaGLM&quot;</span>)</code></pre></div>
 <pre><code>## Downloading GitHub repo nwfsc-assess/nwfscDeltaGLM@master
@@ -90,7 +90,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## Installing nwfscDeltaGLM</code></pre>
 <pre><code>## '/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file  \
 ##   --no-environ --no-save --no-restore --quiet CMD INSTALL  \
-##   '/private/var/folders/sy/sprtrp7d08j74mcs4s1sgx9c006_07/T/RtmpdZ8Rl3/devtoolsb59a464ad69d/nwfsc-assess-nwfscDeltaGLM-701a5fd'  \
+##   '/private/var/folders/sy/sprtrp7d08j74mcs4s1sgx9c006_07/T/RtmpnwDI9g/devtoolsb7c04968b1ce/nwfsc-assess-nwfscDeltaGLM-6e2ab9d'  \
 ##   --library='/Users/eric.ward/Library/R/3.3/library' --install-tests</code></pre>
 <pre><code>## </code></pre>
 <pre><code>## Reloading installed nwfscDeltaGLM</code></pre>
@@ -133,7 +133,7 @@ strata.limits =<span class="st"> </span><span class="kw">data.frame</span>(<span
 <div id="run-data-processing-function" class="section level2">
 <h2>Run data processing function</h2>
 <p>This looks for an object named  in the global environment,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DataList =<span class="st"> </span><span class="kw">processData</span>(<span class="dt">strata.limits =</span> strata.limits)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DataList =<span class="st"> </span><span class="kw">processData</span>(<span class="dt">masterDat =</span> masterDat, <span class="dt">strata.limits =</span> strata.limits)</code></pre></div>
 <pre><code>## [1] &quot;Necessary column names for masterDat:&quot;
 ## [1] &quot;1. BEST_DEPTH_M -&gt; tow depth in meters&quot;
 ## [1] &quot;2. BEST_LAT_DD -&gt; tow latitude in degrees &quot;
