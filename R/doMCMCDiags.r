@@ -142,7 +142,8 @@ doMCMCDiags = function(datalist, strata.limits, directory, mods, StrataWeights="
     # Make easier to read version
     jpeg(paste(Folder,"/","","Index_with_95CI.jpg",sep=""),width=4,height=4,res=200,units="in")
     par(mfrow=c(1,1), mar=c(2.5,2,2,0), mgp=c(1.25,0.25,0), tck=-0.02)
-    plot(McmcIndices$byYear[,'IndexMedian'], col="black", xlab="Year", ylab="Index",main="Year Index", ylim=c(0,max(McmcIndices$byYear[,'IndexMedian']*exp(1.96*McmcIndices$byYear[,'SdLog']),na.rm=TRUE)))
+    if(is.finite(max(McmcIndices$byYear[,'SdLog'], na.rm=T)) == TRUE) plot(McmcIndices$byYear[,'IndexMedian'], col="black", xlab="Year", ylab="Index",main="Year Index", ylim=c(0,max(McmcIndices$byYear[,'IndexMedian']*exp(1.96*McmcIndices$byYear[,'SdLog']),na.rm=TRUE)))
+    if(is.finite(max(McmcIndices$byYear[,'SdLog'], na.rm=T)) == FALSE) plot(McmcIndices$byYear[,'IndexMedian'], col="black", xlab="Year", ylab="Index",main="Year Index", ylim=c(0,max(McmcIndices$byYear[,'IndexMedian']*exp(0),na.rm=TRUE)))
     for(i in 1:nrow(McmcIndices$byYear)) lines( x=rep(i,2), y=McmcIndices$byYear[i,'IndexMedian']*exp(c(-1.96,1.96)*McmcIndices$byYear[i,'SdLog']), col="red")
     dev.off()
 
@@ -159,8 +160,8 @@ doMCMCDiags = function(datalist, strata.limits, directory, mods, StrataWeights="
   # Plot Index and CV for all model configurations
   jpeg(paste(SpeciesFolder,"Index_Comparison.jpg",sep=""),width=1*4,height=2*4,res=200,units="in")
   par(mfrow=c(2,1), mgp=c(1.25,0.25,0), mar=c(3,3,1,0), tck=-0.02)
-  matplot(Indices[,,1], col="black", lty="solid", type="b", xlab="Year", ylab="Biomass index", ylim=c(0,max(Indices[,,1],na.rm=T)))
-  matplot(Indices[,,2], col="black", lty="solid", type="b", xlab="Year", ylab="Index CV", ylim=c(0,max(Indices[,,2],na.rm=T)))
+  if(!is.finite(max(Indices[,,1],na.rm=T))) matplot(Indices[,,1], col="black", lty="solid", type="b", xlab="Year", ylab="Biomass index", ylim=c(0,max(Indices[,,1],na.rm=T)))
+  if(!is.finite(max(Indices[,,2],na.rm=T))) matplot(Indices[,,2], col="black", lty="solid", type="b", xlab="Year", ylab="Index CV", ylim=c(0,max(Indices[,,2],na.rm=T)))
   dev.off()
 
   # Plot Index and CV | Strata for all model configurations
@@ -168,11 +169,15 @@ doMCMCDiags = function(datalist, strata.limits, directory, mods, StrataWeights="
   jpeg(paste(SpeciesFolder,"Index_Comparison_by_strata.jpg",sep=""),width=2*3,height=nlevels(strata)*3,res=200,units="in")
   par(mfrow=c(nlevels(strata),2), mgp=c(1.25,0.25,0), mar=c(3,3,1,0), tck=-0.02, oma=c(0,2,2,0))
   for(StratI in 1:nlevels(strata)){
-    matplot(IndicesByStrata[,StratI,,1], col="black", log=Log, lty="solid", type="b", xlab="Year", ylab="Biomass index", ylim=list( c(0,max(IndicesByStrata[,,,1])), range(IndicesByStrata[,,,1]) )[[ifelse(Log=="",1,2)]])
+    if(!is.finite(max(IndicesByStrata[,,,1],na.rm=T))) {
+      matplot(IndicesByStrata[,StratI,,1], col="black", log=Log, lty="solid", type="b", xlab="Year", ylab="Biomass index", ylim=list( c(0,max(IndicesByStrata[,,,1])), range(IndicesByStrata[,,,1]) )[[ifelse(Log=="",1,2)]])
     if(StratI==1) mtext(side=3, outer=FALSE, line=1, text="Biomass index", cex=1.5)
     mtext(side=2, outer=FALSE, line=2, text=levels(strata)[StratI], cex=1.5)
-    matplot(IndicesByStrata[,StratI,,2], col="black", lty="solid", type="b", xlab="Year", ylab="Index CV", ylim=c(0,max(IndicesByStrata[,,,2],na.rm=T)))
+    }
+    if(!is.finite(max(IndicesByStrata[,,,2],na.rm=T))) {
+      matplot(IndicesByStrata[,StratI,,2], col="black", lty="solid", type="b", xlab="Year", ylab="Index CV", ylim=c(0,max(IndicesByStrata[,,,2],na.rm=T)))
     if(StratI==1) mtext(side=3, outer=FALSE, line=1, text="Index CV", cex=1.5)
+    }
   }
   dev.off()
   invisible(out)

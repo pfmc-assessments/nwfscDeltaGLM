@@ -30,3 +30,5 @@ Example_Species_FinalDiagnostics/Model=1/BUGSoutput_summary.txt
 Example_Species_FinalDiagnostics/Model=1/Model_Structure.txt
 
 *.csv
+
+*.txt

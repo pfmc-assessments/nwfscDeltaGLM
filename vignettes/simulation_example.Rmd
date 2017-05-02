@@ -50,7 +50,6 @@ strata.limits = data.frame(
   )
 ```
 
-
 ### Modify species names
 ```{r}
 species = "Simulated_Species"
@@ -77,7 +76,7 @@ DataList = processData()
 
 ### Define settings for this run
 ```{r}
-mcmc.control = list(chains=1, thin=1, burnin=10, iterToSave=20)
+mcmc.control = list(chains=3, thin=1, burnin=100, iterToSave=200)
 
 modelStructure1 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTows"="random2", "StrataYear.zeroTows"="zero", "VesselYear.zeroTows"="random2", "Vessel.positiveTows"="zero", "Vessel.zeroTows"="zero", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
 
@@ -89,16 +88,11 @@ Create a list that could be used to hold additional models,
 
 ```{r}
 fitted_models = list()
-fitted_models[[1]] = fitDeltaGLM(likelihood = "gamma", modelStructure=modelStructure1, mcmc.control=mcmc.control, covariates=Covariates, Species=species, X.bin=X.bin, X.pos=X.pos)
-fitted_models[[2]] = fitDeltaGLM(likelihood = "gamma", modelStructure=modelStructure2, mcmc.control=mcmc.control, covariates=Covariates, Species=species, X.bin=X.bin, X.pos=X.pos)
+fitted_models[[1]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure1, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
+fitted_models[[2]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure2, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
 ```
 
-## Process MCMC output
-```{r mcmcdiag}
-# Make sure that Data is attached prior to running
-data(SA3)
-doMCMCDiags(datalist=DataList, mods=fitted_models, strata.limits=strata.limits)
-```
+
 
 
 
