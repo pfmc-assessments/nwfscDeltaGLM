@@ -46,7 +46,7 @@ X.bin = matrix( rnorm(nrow(masterDat)*nX.binomial, mean=0, sd=1), ncol=nX.binomi
 X.pos = matrix( rnorm(nrow(masterDat)*nX.pos, mean=0, sd=1), ncol=nX.pos)
 
 ## ------------------------------------------------------------------------
-DataList = processData()
+DataList = processData(strata.limits = strata.limits)
 
 ## ------------------------------------------------------------------------
 mcmc.control = list(chains=3, thin=1, burnin=100, iterToSave=200)
@@ -54,9 +54,4 @@ mcmc.control = list(chains=3, thin=1, burnin=100, iterToSave=200)
 modelStructure1 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTows"="random2", "StrataYear.zeroTows"="zero", "VesselYear.zeroTows"="random2", "Vessel.positiveTows"="zero", "Vessel.zeroTows"="zero", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
 
 modelStructure2 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTows"="zero", "Vessel.positiveTows"="random2", "StrataYear.zeroTows"="zero", "VesselYear.zeroTows"="zero", "Vessel.zeroTows"="random2", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
-
-## ------------------------------------------------------------------------
-fitted_models = list()
-fitted_models[[1]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure1, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
-fitted_models[[2]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure2, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
 

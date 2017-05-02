@@ -31,3 +31,20 @@ names(masterDat)
 species = "Example_Species"
 names(masterDat)[which(names(masterDat)=="EXPANDED_WT_KG")] = "Example_Species"
 
+## ------------------------------------------------------------------------
+DataList = processData(strata.limits = strata.limits)
+
+## ------------------------------------------------------------------------
+mcmc.control = list(chains=1, thin=1, burnin=10, iterToSave=20)
+
+modelStructure1 = list("StrataYear.positiveTows"="fixed", "VesselYear.positiveTows"="zero", "Vessel.positiveTows"="zero", "StrataYear.zeroTows"="fixed", "VesselYear.zeroTows"="zero", "Vessel.zeroTows"="zero", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
+
+## ------------------------------------------------------------------------
+fitted_models = list()
+fitted_models[[1]] = fitDeltaGLM(datalist = DataList, modelStructure=modelStructure1, mcmc.control=mcmc.control, Species=species)
+
+## ----mcmcdiag------------------------------------------------------------
+# Make sure that Data is attached prior to running
+data(SA3)
+doMCMCDiags(datalist=DataList, mods=fitted_models, strata.limits=strata.limits)
+
