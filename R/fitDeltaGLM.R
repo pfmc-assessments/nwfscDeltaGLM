@@ -19,8 +19,6 @@
 #'   \item{positive}{Boolean, defaults to FALSE}
 #'   \item{binomial}{Boolean, defaults to FALSE}
 #' }
-#' @param X.bin Optional matrix for covariates in binomial model
-#' @param X.pos Optional matrix for covariates in positive model
 #' @param likelihood Character string specifying the form of the positive model. Can be one of the following: "gamma" (or "gammaFixedCV"), "lognormal" (or "lognormalFixedCV"), "invGaussian" (or "invGaussianFixedCV"), "lognormalECE", "gammaECE", "poisson", "zt_poisson", or "negbin". Defaults to "gamma". The forms of the model are as follows:
 #' \describe{
 #'   \item{gamma}{Models the response as continuous from a Gamma distribution, with a log-link. The form of the Gamma distribution used is Y ~ Gamma(shape = a, rate = b), where E(Y) = a / b, and CV(Y) = 1 / sqrt(a). For consistency with the lognormal, the CV^2 is assigned an Inverse Gamma (0.001,0.001) prior. If the distribution is specified as "gammaFixedCV", the CV = 1}
@@ -65,7 +63,7 @@ fitDeltaGLM = function(datalist=NULL, modelStructure =
       "Vessel.positiveTows"="zero","Vessel.zeroTows"="zero",
       "Catchability.positiveTows" = "one", "Catchability.zeroTows" = "zero",
       "year.deviations" = "uncorrelated","strata.deviations" = "uncorrelated"),
-  covariates=list(positive=FALSE,binomial=FALSE), X.bin = NA, X.pos = NA, likelihood = "gamma",
+  covariates=list(positive=FALSE,binomial=FALSE), likelihood = "gamma",
   model.name = "deltaGLM.txt", fit.model=TRUE, write.model=TRUE,
   mcmc.control = list(chains = 5, thin = 1, burn = 5000, iterToSave = 2000),
   Parallel=TRUE, Species = "NULL",logitBounds = c(-20,20),logBounds = c(-20,20),
@@ -281,7 +279,7 @@ fitDeltaGLM = function(datalist=NULL, modelStructure =
 
     if(covariates$positive==TRUE) {
       # modify the likelihood string to include covariates for the positive tows
-      likelihood.string = paste("      u.nz[i] <- inprod(C.pos[1:nX.pos],X.pos[i,]) + Sdev[strata[nonZeros[i]]] + Ydev[year[nonZeros[i]]] + VYdev[vesselYear[nonZeros[i]]] + Vdev[vessel[nonZeros[i]]] + SYdev[strataYear[nonZeros[i]]] + B.pos[1]*logeffort[nonZeros[i]] + B.pos[2]*logeffort2[nonZeros[i]];\n", "      y[nonZeros[i]] ~ dlnorm(u.nz[i],tau[1]);\n",sep="")
+      likelihood.string = paste("      u.nz[i] <- inprod(C.pos[1:nX.pos],X.pos[i,1:nX.pos]) + Sdev[strata[nonZeros[i]]] + Ydev[year[nonZeros[i]]] + VYdev[vesselYear[nonZeros[i]]] + Vdev[vessel[nonZeros[i]]] + SYdev[strataYear[nonZeros[i]]] + B.pos[1]*logeffort[nonZeros[i]] + B.pos[2]*logeffort2[nonZeros[i]];\n", "      y[nonZeros[i]] ~ dlnorm(u.nz[i],tau[1]);\n",sep="")
     }
 
     prior.string = paste("   oneOverCV2[1] ~ dgamma(",dgammaNum,",",dgammaNum,");\n   CV[1] <- 1/sqrt(oneOverCV2[1]);\n   CV[2] <- 0;\n   sigma[1] <- sqrt(log(pow(CV[1],2)+1));\n   tau[1] <- pow(sigma[1],-2);\n   ratio <- 0;\n   p.ece[1] <- 0;\n   p.ece[2] <- 0;\n",sep="")
@@ -453,7 +451,7 @@ fitDeltaGLM = function(datalist=NULL, modelStructure =
   # This IF statement is just to modify the expected value of the binomial model to include covariates IF they are specified
   logit.p.string = "logit(p.z[i]) <- pVdev[vessel[i]] + pVYdev[vesselYear[i]] + pSdev[strata[i]] + pYdev[year[i]] + pSYdev[strataYear[i]] + B.zero[1]*effort[i] + B.zero[2]*effort2[i];\n"
   if(covariates$binomial == TRUE) {
-    logit.p.string = "logit(p.z[i]) <- inprod(C.bin[1:nX.binomial],X.bin[i,]) + pVdev[vessel[i]] + pVYdev[vesselYear[i]] + pSdev[strata[i]] + pYdev[year[i]] + pSYdev[strataYear[i]] + B.zero[1]*effort[i] + B.zero[2]*effort2[i];\n"
+    logit.p.string = "logit(p.z[i]) <- inprod(C.bin[1:nX.binomial],X.bin[i,1:nX.binomial]) + pVdev[vessel[i]] + pVYdev[vesselYear[i]] + pSdev[strata[i]] + pYdev[year[i]] + pSYdev[strataYear[i]] + B.zero[1]*effort[i] + B.zero[2]*effort2[i];\n"
   }
 
   deltaGLM =

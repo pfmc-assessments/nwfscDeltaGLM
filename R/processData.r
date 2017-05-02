@@ -114,6 +114,8 @@ processData = function(Truncate=0) {
     DataList[["X.pos"]] = X.pos
     if(length(Exclude_NoStratum) > 0) DataList[["X.pos"]] = DataList[["X.pos"]][-Exclude_NoStratum]
     if(length(Exclude_Missing) > 0) DataList[["X.pos"]] = DataList[["X.pos"]][-Exclude_Missing]
+    DataList[["X.pos"]] = DataList[["X.pos"]][which(Data$isNonZeroTrawl==1),]
+    if(!is.matrix(DataList[["X.pos"]])) DataList[["X.pos"]] = as.matrix(DataList[["X.pos"]],ncol=1)
   }
   DataList[["nX.binomial"]] = ncol(DataList[["X.bin"]])
   DataList[["nX.pos"]] = ncol(DataList[["X.pos"]])

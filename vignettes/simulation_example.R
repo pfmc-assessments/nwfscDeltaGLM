@@ -1,17 +1,4 @@
----
-title: "Package nwfscDeltaGLM"
-author: "NWFSC-assess"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-## Install package and set working directory
-
-```{r install}
+## ----install-------------------------------------------------------------
 # Install package
 install.packages("devtools", repos = "http://cran.us.r-project.org")
 library("devtools")
@@ -19,11 +6,8 @@ install_github("nwfsc-assess/nwfscDeltaGLM")
   
 # Load package
 library(nwfscDeltaGLM)
-```
 
-## Load data and strata
-
-```{r load}
+## ----load----------------------------------------------------------------
 Sim_List = SimSimple(
   MeanEncounter = 0.5,
   Nyears = 10,
@@ -48,57 +32,27 @@ strata.limits = data.frame(
   MaxDepth = 100,
   stringsAsFactors = FALSE
   )
-```
 
-
-### Modify species names
-```{r}
+## ------------------------------------------------------------------------
 species = "Simulated_Species"
 names(masterDat)[which(names(masterDat)=="SPECIES_WT_KG")] = species
 masterDat = cbind(masterDat, AREA_SWEPT_MSQ=masterDat$AREA_SWEPT_HA*1e4)
-```
 
-### Generate covariates that aren't important (i.e., not in the true operating model)
-```{r}
+
+## ------------------------------------------------------------------------
 Covariates = list(positive=TRUE, binomial=TRUE)
 nX.binomial = 1
 nX.pos = 1
 X.bin = matrix( rnorm(nrow(masterDat)*nX.binomial, mean=0, sd=1), ncol=nX.binomial)
 X.pos = matrix( rnorm(nrow(masterDat)*nX.pos, mean=0, sd=1), ncol=nX.pos)
-```
 
-## Run data processing function
-This looks for an object named \code{masterDat} in the global environment,
-```{r}
+## ------------------------------------------------------------------------
 DataList = processData()
-```
 
-## Run model
-
-### Define settings for this run
-```{r}
+## ------------------------------------------------------------------------
 mcmc.control = list(chains=1, thin=1, burnin=10, iterToSave=20)
 
 modelStructure1 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTows"="random2", "StrataYear.zeroTows"="zero", "VesselYear.zeroTows"="random2", "Vessel.positiveTows"="zero", "Vessel.zeroTows"="zero", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
 
 modelStructure2 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTows"="zero", "Vessel.positiveTows"="random2", "StrataYear.zeroTows"="zero", "VesselYear.zeroTows"="zero", "Vessel.zeroTows"="random2", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
-```
-
-### Run model 
-Create a list that could be used to hold additional models,
-
-```{r}
-fitted_models = list()
-fitted_models[[1]] = fitDeltaGLM(likelihood = "gamma", modelStructure=modelStructure1, mcmc.control=mcmc.control, covariates=Covariates, Species=species, X.bin=X.bin, X.pos=X.pos)
-fitted_models[[2]] = fitDeltaGLM(likelihood = "gamma", modelStructure=modelStructure2, mcmc.control=mcmc.control, covariates=Covariates, Species=species, X.bin=X.bin, X.pos=X.pos)
-```
-
-## Process MCMC output
-```{r mcmcdiag}
-# Make sure that Data is attached prior to running
-data(SA3)
-doMCMCDiags(datalist=DataList, mods=fitted_models, strata.limits=strata.limits)
-```
-
-
 
