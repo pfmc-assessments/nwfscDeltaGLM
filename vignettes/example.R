@@ -1,17 +1,4 @@
----
-title: "Package nwfscDeltaGLM"
-author: "NWFSC-assess"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-## Install package and set working directory
-
-```{r install}
+## ----install-------------------------------------------------------------
 # Install package
 install.packages("devtools",repos = "http://cran.us.r-project.org")
 library("devtools")
@@ -19,11 +6,8 @@ install_github("nwfsc-assess/nwfscDeltaGLM")
   
 # Load package
 library(nwfscDeltaGLM)
-```
 
-## Load data and strata
-
-```{r load}
+## ----load----------------------------------------------------------------
 # Load data and strata
 data(Example_Species)
 masterDat = Example_Species
@@ -33,45 +17,27 @@ strata.limits = data.frame("STRATA" = c("First", "Second", "Mid", "D", "South"),
   SLat = c(36, 36, 34.5, 34.5, 34.5),
   MinDepth = c(55, 183, 549, 55, 55),
   MaxDepth = c(183, 549, 700, 549, 549), stringsAsFactors = FALSE)
-```
 
-### Modify species names
-```{r}
+## ------------------------------------------------------------------------
 names(masterDat)
 
 species = "Example_Species"
 names(masterDat)[which(names(masterDat)=="EXPANDED_WT_KG")] = "Example_Species"
-```
 
-## Run data processing function
-This looks for an object named \code{masterDat} in the global environment,
-```{r}
+## ------------------------------------------------------------------------
 DataList = processData()
-```
 
-## Run model
-
-### Define settings for this run
-```{r}
+## ------------------------------------------------------------------------
 mcmc.control = list(chains=1, thin=1, burnin=10, iterToSave=20)
 
 modelStructure1 = list("StrataYear.positiveTows"="fixed", "VesselYear.positiveTows"="zero", "Vessel.positiveTows"="zero", "StrataYear.zeroTows"="fixed", "VesselYear.zeroTows"="zero", "Vessel.zeroTows"="zero", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
-```
 
-### Run model 
-Create a list that could be used to hold additional models,
-
-```{r}
+## ------------------------------------------------------------------------
 fitted_models = list()
 fitted_models[[1]] = fitDeltaGLM(datalist = DataList, modelStructure=modelStructure1, mcmc.control=mcmc.control, Species=species)
-```
 
-## Process MCMC output
-```{r eval=FALSE}
-# Make sure that Data is attached prior to running
-data(SA3)
-doMCMCDiags(datalist=DataList, raw_data = Data, mods=fitted_models, strata.limits=strata.limits)
-```
-
-
+## ----eval=FALSE----------------------------------------------------------
+#  # Make sure that Data is attached prior to running
+#  data(SA3)
+#  doMCMCDiags(datalist=DataList, raw_data = Data, mods=fitted_models, strata.limits=strata.limits)
 

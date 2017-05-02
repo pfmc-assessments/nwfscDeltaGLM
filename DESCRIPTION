@@ -15,3 +15,7 @@ LazyData: true
 BuildVignettes: yes
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
+Suggests:
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
