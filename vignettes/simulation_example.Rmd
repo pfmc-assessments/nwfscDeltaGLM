@@ -1,0 +1,113 @@
+---
+title: "Package nwfscDeltaGLM"
+author: "NWFSC-assess"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Install package and set working directory
+
+```{r install}
+# Install package
+install.packages("devtools", repos = "http://cran.us.r-project.org")
+library("devtools")
+install_github("nwfsc-assess/nwfscDeltaGLM")
+  
+# Load package
+library(nwfscDeltaGLM)
+```
+
+## Load data and strata
+
+```{r load}
+Sim_List = SimSimple(
+  MeanEncounter = 0.5,
+  Nyears = 10,
+  Nstrata = 15,
+  Nvessels = 4,
+  Obsperyear = 175,
+  sigmaV = rep(0, 2),
+  sigmaVY = rep(1, 2),
+  sigmaS = rep(1, 2),
+  sigmaY = rep(1, 2),
+  sigmaSY = rep(1, 2),
+  sigmaResid = 1
+  )
+
+masterDat = Sim_List[["DF"]]
+
+strata.limits <- readIn(ncol=5,nlines=16)
+  STRATA  NLat SLat MinDepth MaxDepth
+  A      1.5 0.5  0       100
+  B      2.5 1.5  0       100
+  C      3.5 2.5  0       100
+  D      4.5 3.5  0       100
+  E      5.5 4.5  0       100
+  F      6.5 5.5  0       100
+  G      7.5 6.5  0       100
+  H      8.5 7.5  0       100
+  I      9.5 8.5  0       100
+  J      10.5 9.5  0       100
+  K      11.5 10.5  0       100
+  L      12.5 11.5  0       100
+  M      13.5 12.5  0       100
+  N      14.5 13.5  0       100
+  O      15.5 14.5  0       100
+```
+
+### Generate covariates that aren't important (i.e., not in the true operating model)
+```{r}
+Covariates = list(positive=TRUE, binomial=TRUE)
+nX.binomial = 1
+nX.pos = 1
+X.bin = matrix( rnorm(nrow(masterDat)*nX.binomial, mean=0, sd=1), ncol=nX.binomial)
+X.pos = matrix( rnorm(nrow(masterDat)*nX.pos, mean=0, sd=1), ncol=nX.pos)
+```
+
+### Modify species names
+```{r}
+species = "Simulated_Species"
+names(masterDat)[which(names(masterDat)=="SPECIES_WT_KG")] = species
+masterDat = cbind(masterDat, AREA_SWEPT_MSQ=masterDat$AREA_SWEPT_HA*1e4)
+
+```
+
+## Run data processing function
+This looks for an object named \code{masterDat} in the global environment,
+```{r}
+DataList = processData()
+```
+
+## Run model
+
+### Define settings for this run
+```{r}
+mcmc.control = list(chains=1, thin=1, burnin=10, iterToSave=20)
+
+modelStructure1 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTows"="random2", "StrataYear.zeroTows"="zero", "VesselYear.zeroTows"="random2", "Vessel.positiveTows"="zero", "Vessel.zeroTows"="zero", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
+
+modelStructure2 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTows"="zero", "Vessel.positiveTows"="random2", "StrataYear.zeroTows"="zero", "VesselYear.zeroTows"="zero", "Vessel.zeroTows"="random2", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
+```
+
+### Run model 
+Create a list that could be used to hold additional models,
+
+```{r}
+fitted_models = list()
+fitted_models[[1]] = fitDeltaGLM(likelihood = "gamma", modelStructure=modelStructure1, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
+fitted_models[[2]] = fitDeltaGLM(likelihood = "gamma", modelStructure=modelStructure2, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
+```
+
+## Process MCMC output
+```{r mcmcdiag}
+# Make sure that Data is attached prior to running
+data(SA3)
+doMCMCDiags(datalist=DataList, mods=fitted_models, strata.limits=strata.limits)
+```
+
+
+

@@ -19,6 +19,8 @@
 #'   \item{positive}{Boolean, defaults to FALSE}
 #'   \item{binomial}{Boolean, defaults to FALSE}
 #' }
+#' @param X.bin Optional matrix for covariates in binomial model
+#' @param X.pos Optional matrix for covariates in positive model
 #' @param likelihood Character string specifying the form of the positive model. Can be one of the following: "gamma" (or "gammaFixedCV"), "lognormal" (or "lognormalFixedCV"), "invGaussian" (or "invGaussianFixedCV"), "lognormalECE", "gammaECE", "poisson", "zt_poisson", or "negbin". Defaults to "gamma". The forms of the model are as follows:
 #' \describe{
 #'   \item{gamma}{Models the response as continuous from a Gamma distribution, with a log-link. The form of the Gamma distribution used is Y ~ Gamma(shape = a, rate = b), where E(Y) = a / b, and CV(Y) = 1 / sqrt(a). For consistency with the lognormal, the CV^2 is assigned an Inverse Gamma (0.001,0.001) prior. If the distribution is specified as "gammaFixedCV", the CV = 1}
@@ -63,7 +65,7 @@ fitDeltaGLM = function(datalist=NULL, modelStructure =
       "Vessel.positiveTows"="zero","Vessel.zeroTows"="zero",
       "Catchability.positiveTows" = "one", "Catchability.zeroTows" = "zero",
       "year.deviations" = "uncorrelated","strata.deviations" = "uncorrelated"),
-  covariates=list(positive=FALSE,binomial=FALSE),likelihood = "gamma",
+  covariates=list(positive=FALSE,binomial=FALSE), X.bin = NA, X.pos = NA, likelihood = "gamma",
   model.name = "deltaGLM.txt", fit.model=TRUE, write.model=TRUE,
   mcmc.control = list(chains = 5, thin = 1, burn = 5000, iterToSave = 2000),
   Parallel=TRUE, Species = "NULL",logitBounds = c(-20,20),logBounds = c(-20,20),
