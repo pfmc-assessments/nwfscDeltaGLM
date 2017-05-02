@@ -4,12 +4,19 @@
 \alias{processData}
 \title{Process raw haul data}
 \usage{
-processData(Truncate = 0, strata.limits = NA)
+processData(masterDat = NULL, Truncate = 0, strata.limits = NULL,
+  X.pos = NULL, X.bin = NULL)
 }
 \arguments{
+\item{masterDat}{Data frame with raw haul data}
+
 \item{Truncate}{Lower bound of hauls, defaults to 0. Values < Truncate will be turned to 0}
 
 \item{strata.limits}{Data frame of strata limits}
+
+\item{X.pos}{Optional matrix of covariates for the positive model, dimensioned as same rows as raw data}
+
+\item{X.bin}{Optional matrix of covariates for the presence-absence model, dimensioned as same rows as raw data}
 }
 \value{
 DataList Data frame of processed data to fit

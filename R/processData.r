@@ -45,14 +45,14 @@ processData = function(masterDat = NULL, Truncate=0, strata.limits=NULL, X.pos =
   # Error checking for covariates
   if(!is.null(X.pos)) {
     if(!is.matrix(X.pos)) X.pos = matrix(X.pos, ncol=1)
-    if(nrow(X.pos)!= ) {
+    if(nrow(X.pos)!= nrow(masterDat)) {
       print("Error: covariate matrix for positive model input, but the rows do not match the rows of masterDat")
       stop()
     }
   }
   if(!is.null(X.bin)) {
     if(!is.matrix(X.bin)) X.bin = matrix(X.bin, ncol=1)
-    if(nrow(X.bin)!= ) {
+    if(nrow(X.bin)!= nrow(masterDat)) {
       print("Error: covariate matrix for binomial model input, but the rows do not match the rows of masterDat")
       stop()
     }
