@@ -1,0 +1,83 @@
+---
+  title: "Package nwfscDeltaGLM"
+author: "NWFSC-assess"
+date: "May 2 2017"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{nwfscDeltaGLM}
+%\VignetteEngine{knitr::rmarkdown}
+\usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Install package and set working directory
+
+```{r install}
+# Install package
+install.packages("devtools")
+library("devtools")
+install_github("nwfsc-assess/nwfscDeltaGLM")
+  
+# Load package
+library(nwfscDeltaGLM)
+```
+
+## Load data and strata
+
+```{r load}
+# Load data and strata
+data(Example_Species)
+masterDat = Example_Species
+strata.limits <- readIn(ncol=5,nlines=6)
+  STRATA  NLat SLat MinDepth MaxDepth
+  First      49.0 36.0  55        183
+  Second      49.0 36.0  183       549
+  Mid      49.0 34.5  549       700
+  D      36.0 34.5  55        549
+  South      34.5 32.0  55        549
+
+```
+
+### Modify species names
+```{r}
+names(masterDat)
+
+species = "Example_Species"
+names(masterDat)[which(names(masterDat)=="EXPANDED_WT_KG")] = "Example_Species"
+```
+
+## Run data processing function
+This looks for an object named \code{masterDat} in the global environment,
+```{r}
+DataList = processData()
+```
+
+## Run model
+
+### Define settings for this run
+```{r}
+mcmc.control = list(chains=1, thin=1, burnin=10, iterToSave=20)
+
+modelStructure1 = list("StrataYear.positiveTows"="fixed", "VesselYear.positiveTows"="zero", "Vessel.positiveTows"="zero", "StrataYear.zeroTows"="fixed", "VesselYear.zeroTows"="zero", "Vessel.zeroTows"="zero", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
+```
+
+### Run model 
+Create a list that could be used to hold additional models,
+
+```{r}
+fitted_models = list()
+fitted_models[[1]] = fitDeltaGLM(datalist = DataList, modelStructure=modelStructure1, mcmc.control=mcmc.control, Species=species)
+```
+
+## Process MCMC output
+```{r}
+# Make sure that Data is attached prior to running
+data(SA3)
+doMCMCDiags(my.wd,mods)
+```
+
+
+

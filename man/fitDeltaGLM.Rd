@@ -4,7 +4,7 @@
 \alias{fitDeltaGLM}
 \title{This function writes, and optionally runs the model in the BUGS/JAGS framework}
 \usage{
-fitDeltaGLM(datalist, modelStructure = list(StrataYear.positiveTows =
+fitDeltaGLM(datalist = NULL, modelStructure = list(StrataYear.positiveTows =
   "random", VesselYear.positiveTows = "random", StrataYear.zeroTows = "random",
   VesselYear.zeroTows = "random", Vessel.positiveTows = "zero", Vessel.zeroTows
   = "zero", Catchability.positiveTows = "one", Catchability.zeroTows = "zero",
