@@ -92,7 +92,7 @@ ComputeIndices = function(Data, Model, FileName, maxDims=6, Folder=NA,
     }
     # CV of median (from J. Wallace "Survey.Biomass.GlmmBUGS.ver.3.00.r")
     # Temp = Area[YearI,StratI] * rowSums( cMx(Chains[, YearI, ,1]) * cMx(Chains[,YearI,,2]) )  # By using StratI outside of the Strata loop only the final area estimate is obained.
-    Temp <- (cMx(Chains[, YearI, , 1]) * cMx(Chains[, YearI, , 2])) %*% array(Area[YearI,], c(3,1))
+    Temp <- (cMx(Chains[, YearI, , 1]) * cMx(Chains[, YearI, , 2])) %*% array(Area[YearI,]) #array(Area[YearI,], c(3,1))
     CvMedianYear[YearI] = sqrt(var(Temp)) / median(Temp)
     # SD of log of index (from J. Wallace "Survey.Biomass.GlmmBUGS.ver.3.00.r")
     SdLogYear[YearI] = sd(log(Temp))

@@ -82,18 +82,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## (as 'lib' is unspecified)</code></pre>
 <pre><code>## 
 ## The downloaded binary packages are in
-##  /var/folders/sy/sprtrp7d08j74mcs4s1sgx9c006_07/T//RtmpgmRUvD/downloaded_packages</code></pre>
+##  /var/folders/sy/sprtrp7d08j74mcs4s1sgx9c006_07/T//RtmpYTOzLo/downloaded_packages</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;devtools&quot;</span>)
 <span class="kw">install_github</span>(<span class="st">&quot;nwfsc-assess/nwfscDeltaGLM&quot;</span>)</code></pre></div>
-<pre><code>## Downloading GitHub repo nwfsc-assess/nwfscDeltaGLM@master
-## from URL https://api.github.com/repos/nwfsc-assess/nwfscDeltaGLM/zipball/master</code></pre>
-<pre><code>## Installing nwfscDeltaGLM</code></pre>
-<pre><code>## '/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file  \
-##   --no-environ --no-save --no-restore --quiet CMD INSTALL  \
-##   '/private/var/folders/sy/sprtrp7d08j74mcs4s1sgx9c006_07/T/RtmpgmRUvD/devtools90d552f23796/nwfsc-assess-nwfscDeltaGLM-d379e1f'  \
-##   --library='/Users/eric.ward/Library/R/3.3/library' --install-tests</code></pre>
-<pre><code>## </code></pre>
-<pre><code>## Reloading installed nwfscDeltaGLM</code></pre>
+<pre><code>## Skipping install of 'nwfscDeltaGLM' from a github remote, the SHA1 (52a14ea9) has not changed since last install.
+##   Use `force = TRUE` to force installation</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load package</span>
 <span class="kw">library</span>(nwfscDeltaGLM)</code></pre></div>
 </div>
@@ -171,6 +164,15 @@ fitted_models[[<span class="dv">1</span>]] =<span class="st"> </span><span class
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make sure that Data is attached prior to running</span>
 <span class="kw">data</span>(SA3)
 <span class="kw">doMCMCDiags</span>(<span class="dt">datalist=</span>DataList, <span class="dt">mods=</span>fitted_models, <span class="dt">strata.limits=</span>strata.limits)</code></pre></div>
+<pre><code>## The following objects are masked _by_ .GlobalEnv:
+## 
+##     R, X.bin, X.pos, log2pi, n, nNonZeros, nS, nSY, nV, nVY,
+##     nX.binomial, nX.pos, nY, nonZeros</code></pre>
+<pre><code>## The following objects are masked _by_ .GlobalEnv:
+## 
+##     effort, effort2, isNonZeroTrawl, lfacty, logeffort,
+##     logeffort2, logy, logy3, ones.vec, strata, strataYear, vessel,
+##     vesselYear, y, year</code></pre>
 </div>
 
 

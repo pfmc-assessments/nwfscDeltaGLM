@@ -36,3 +36,8 @@ modelStructure1 = list("StrataYear.positiveTows"="fixed", "VesselYear.positiveTo
 fitted_models = list()
 fitted_models[[1]] = fitDeltaGLM(datalist = DataList, modelStructure=modelStructure1, mcmc.control=mcmc.control, Species=species)
 
+## ----mcmcdiag------------------------------------------------------------
+# Make sure that Data is attached prior to running
+data(SA3)
+doMCMCDiags(datalist=DataList, mods=fitted_models, strata.limits=strata.limits)
+
