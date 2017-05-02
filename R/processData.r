@@ -1,12 +1,14 @@
 #' Process raw haul data
 #'
 #' @param Truncate Lower bound of hauls, defaults to 0. Values < Truncate will be turned to 0
+#' @param strata.limits Data frame of strata limits
+
 #' @return DataList Data frame of processed data to fit
 #'
 #' @import grDevices
 #' @export
 #'
-processData = function(Truncate=0) {
+processData = function(Truncate=0, strata.limits=NA) {
 
   print("Necessary column names for masterDat:")
   print("1. BEST_DEPTH_M -> tow depth in meters")
