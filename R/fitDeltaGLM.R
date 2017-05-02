@@ -57,7 +57,7 @@
 #' }
 #' @export
 #'
-fitDeltaGLM = function(datalist, modelStructure =
+fitDeltaGLM = function(datalist=NULL, modelStructure =
     list("StrataYear.positiveTows" = "random","VesselYear.positiveTows" = "random",
       "StrataYear.zeroTows" ="random","VesselYear.zeroTows" = "random",
       "Vessel.positiveTows"="zero","Vessel.zeroTows"="zero",
@@ -83,11 +83,6 @@ fitDeltaGLM = function(datalist, modelStructure =
 
   if(modelStructure$Catchability.positiveTows%in%c("linear","quadratic") | modelStructure$Catchability.zeroTows%in%c("one","linear","quadratic")){
     print("Warning: index will not have comparable scale to a design-based (raw) index unless catchability.positiveTows equals 'one'  catchability.zeroTows equals 'zero'")
-  }
-
-  if(.Platform$OS.type != "windows" & Parallel == TRUE) {
-    print("Warning: system OS is non-windows, and running in parallel is currently not supported. Code will run in non-parallel")
-    Parallel = FALSE
   }
   if(length(prior.scale) != 6 | length(which(is.na(prior.scale)==T)) > 0 | length(which(prior.scale <= 0)) > 0) {
     print("Error: prior.scale needs to be specified as a 6-element vector, of positive values")
@@ -412,8 +407,6 @@ fitDeltaGLM = function(datalist, modelStructure =
     # then gamma.b[i] = gamma.a / u[i]
   	prior.string = paste("   oneOverCV2[1] ~ dgamma(",dgammaNum,",",dgammaNum,") T(0.000001,1000000) ;\n   gamma.a[1] <- oneOverCV2[1];\n   CV[1] <- 1/sqrt(oneOverCV2[1]);\n   oneOverCV2[2] ~ dgamma(",dgammaNum,",",dgammaNum,") T(0.000001,1000000) ;\n   gamma.a[2] <- oneOverCV2[2];\n   CV[2] <- 1/sqrt(oneOverCV2[2]);\n   logratio ~ dunif(0,5);\n   ratio <- exp(logratio);\n   alpha.ece[1] <- 1;\n   alpha.ece[2] <- 1;\n   p.ece[1:2] ~ ddirch(alpha.ece[1:2]);\n",sep="")
   }
-
-
 
   ####################################################################
   # This section is related to year deviations, default is to make them uncorrelated

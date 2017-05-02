@@ -6,3 +6,15 @@
 .Rbuildignore
 
 .DS_Store
+
+deltaGLM.txt
+
+Tows_outside_strata.csv
+
+Tows_Per_StrataYear.csv
+
+Tows_with_missing_data.csv
+
+Encounters_Per_StrataYear.csv
+
+jags_data.txt
