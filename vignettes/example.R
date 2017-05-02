@@ -7,6 +7,13 @@ install_github("nwfsc-assess/nwfscDeltaGLM")
 # Load package
 library(nwfscDeltaGLM)
 
+## ------------------------------------------------------------------------
+data(SA3)
+
+## ------------------------------------------------------------------------
+data(Example_Species)
+names(Example_Species)
+
 ## ----load----------------------------------------------------------------
 # Load data and strata
 data(Example_Species)

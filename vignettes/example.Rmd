@@ -21,6 +21,24 @@ install_github("nwfsc-assess/nwfscDeltaGLM")
 library(nwfscDeltaGLM)
 ```
 
+## Datasets
+
+There's three files needed to run the deltaGLM code. The package includes several that have been used as defaults for west coast assessments. It is critical that any new data used by the package have the same column names.
+
+First, \code{SA3} contains the area, in hectares of 1756 strata, defined by the latitude and longitude (in decimal degrees), depth (in meters). Each strata also has an associated area, in hectares. These individual areas are summed up to define areas for boundaries chosen by the user.  
+```{r}
+data(SA3)
+```
+
+Second, a \code{strata.limits} data frame needs to be defined, with names \code{NLat} (the northern boundary), \code{SLat} (the southern boundary), \code{MinDepth} (the minimum depth), and \code{MaxDepth} (the maximum depth). An example of generating this data frame is below. 
+Third, a data frame with raw haul data for an individual species needs to be defined. We provide an example in the \code{Example_Species} object. 
+
+```{r}
+data(Example_Species)
+names(Example_Species)
+```
+
+
 ## Load data and strata
 
 ```{r load}

@@ -1,5 +1,5 @@
 ---
-title: "Package nwfscDeltaGLM"
+title: "Package nwfscDeltaGLM: simulation example"
 author: "NWFSC-assess"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
