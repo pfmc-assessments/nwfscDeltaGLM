@@ -30,7 +30,7 @@ species = "Example_Species"
 names(masterDat)[which(names(masterDat)=="EXPANDED_WT_KG")] = species
 
 # Preliminary data processing
-#DataList = processData(strata.limits=defaultLimits)
+DataList = processData(strata.limits=defaultLimits)
 
 # Define settings
 mcmc.control = list(chains=3, thin=1, burnin=500, iterToSave=1000)
@@ -39,6 +39,8 @@ modelStructure1 = list("StrataYear.positiveTows"="fixed",
 "VesselYear.positiveTows"="zero",
 "StrataYear.zeroTows"="fixed",
 "VesselYear.zeroTows"="zero",
+"Vessel.positiveTows"="zero",
+"Vessel.zeroTows"="zero",
 "Catchability.positiveTows"="one",
 "Catchability.zeroTows"="zero",
 "year.deviations"="fixed",
