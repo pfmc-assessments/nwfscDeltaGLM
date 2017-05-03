@@ -14,7 +14,7 @@ PlotOffset = function(Data, BugsList, maxDims=8, FileName, Folder=NA){
   if(is.na(Folder)) Folder = paste(getwd(),"/",sep="")
 
   # Attach stuff
-  attach(BugsList)
+  attach(BugsList, warn.conflicts = FALSE)
   on.exit( detach(BugsList) )
   #attach(Data)
   nonZeros = which(isNonZeroTrawl==TRUE)

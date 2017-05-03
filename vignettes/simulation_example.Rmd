@@ -86,7 +86,7 @@ modelStructure2 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTow
 ### Run model 
 Create a list that could be used to hold additional models,
 
-```{r}
+```{r, eval=FALSE}
 fitted_models = list()
 fitted_models[[1]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure1, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
 fitted_models[[2]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure2, mcmc.control=mcmc.control, covariates=Covariates, Species=species)

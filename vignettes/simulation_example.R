@@ -55,8 +55,8 @@ modelStructure1 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTow
 
 modelStructure2 = list("StrataYear.positiveTows"="zero", "VesselYear.positiveTows"="zero", "Vessel.positiveTows"="random2", "StrataYear.zeroTows"="zero", "VesselYear.zeroTows"="zero", "Vessel.zeroTows"="random2", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
 
-## ------------------------------------------------------------------------
-fitted_models = list()
-fitted_models[[1]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure1, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
-fitted_models[[2]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure2, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
+## ---- eval=FALSE---------------------------------------------------------
+#  fitted_models = list()
+#  fitted_models[[1]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure1, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
+#  fitted_models[[2]] = fitDeltaGLM(datalist=DataList, likelihood = "gamma", modelStructure=modelStructure2, mcmc.control=mcmc.control, covariates=Covariates, Species=species)
 
