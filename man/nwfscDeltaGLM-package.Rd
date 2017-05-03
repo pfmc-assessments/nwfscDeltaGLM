@@ -48,9 +48,10 @@ modelStructure1 = list("StrataYear.positiveTows"="fixed",
 
 # Define models
 fitted_models = list()
-fitted_models[[1]] = fitDeltaGLM(modelStructure=modelStructure1,
+fitted_models[[1]] = fitDeltaGLM(datalist=DataList, modelStructure=modelStructure1,
 mcmc.control=mcmc.control,
-Species=species)
+Species=species,
+Parallel=FALSE)
 
 #mods[[2]] = fitCPUEModel(modelStructure=modelStructure2,
 #mcmc.control=mcmc.control,
