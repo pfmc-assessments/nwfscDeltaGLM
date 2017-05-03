@@ -12,6 +12,8 @@
 #'
 processData = function(masterDat = NULL, Truncate=0, strata.limits=NULL, X.pos = NULL, X.bin = NULL) {
 
+  Letters = apply(MARGIN=1,FUN=paste,collapse="",expand.grid(letters,letters))
+
   print("Necessary column names for masterDat:")
   print("1. BEST_DEPTH_M -> tow depth in meters")
   print("2. BEST_LAT_DD -> tow latitude in degrees ")
