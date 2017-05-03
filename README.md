@@ -35,8 +35,6 @@ Please read the following list of known problems and solutions
 
 Further reading
 =============
-The user manual (which may not include all current features) can found here:
-https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/examples/bayesGLM_Writeup_2.15.docx
 
 For more details regarding development and testing of this delta-GLMM software please see:
 * Shelton, A. O., J. T. Thorson, E. J. Ward, and B. E. Feist. in press. Spatial, semi-parametric models improve estimates of species abundance and distribution. Canadian Journal of Fisheries and Aquatic Sciences.
