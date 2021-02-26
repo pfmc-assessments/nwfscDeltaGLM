@@ -4,10 +4,19 @@
 \alias{SimSimple}
 \title{Simulate data}
 \usage{
-SimSimple(MeanEncounter, Nyears = 10, Nstrata = 15, Nvessels = 4,
-  Obsperyear = 175, sigmaV = rep(1, 2), sigmaVY = rep(1, 2),
-  sigmaS = rep(1, 2), sigmaY = rep(1, 2), sigmaSY = rep(1, 2),
-  sigmaResid = 1)
+SimSimple(
+  MeanEncounter,
+  Nyears = 10,
+  Nstrata = 15,
+  Nvessels = 4,
+  Obsperyear = 175,
+  sigmaV = rep(1, 2),
+  sigmaVY = rep(1, 2),
+  sigmaS = rep(1, 2),
+  sigmaY = rep(1, 2),
+  sigmaSY = rep(1, 2),
+  sigmaResid = 1
+)
 }
 \arguments{
 \item{MeanEncounter}{mean encounter rate}

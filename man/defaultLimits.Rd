@@ -4,7 +4,8 @@
 \name{defaultLimits}
 \alias{defaultLimits}
 \title{Haul characteristics for 1756 hauls.}
-\format{A data frame with 1756 rows and 7 variables:
+\format{
+A data frame with 1756 rows and 7 variables:
 \describe{
 \item{STRATA}{strata name}
 \item{NLat}{northern boundary, in decimal degrees}
@@ -12,7 +13,8 @@
 \item{MinDepth}{minimum depth, in meters}
 \item{MaxDepth}{maximum depth, in meters}
 ...
-}}
+}
+}
 \usage{
 defaultLimits
 }

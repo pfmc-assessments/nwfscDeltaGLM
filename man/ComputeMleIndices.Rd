@@ -4,8 +4,15 @@
 \alias{ComputeMleIndices}
 \title{Compute MLE index of abundance}
 \usage{
-ComputeMleIndices(Data, Model, FileName, Folder = NA,
-  Weights = "StrataAreas", StrataTable, Run = TRUE)
+ComputeMleIndices(
+  Data,
+  Model,
+  FileName,
+  Folder = NA,
+  Weights = "StrataAreas",
+  StrataTable,
+  Run = TRUE
+)
 }
 \arguments{
 \item{Data}{The data to be fit}

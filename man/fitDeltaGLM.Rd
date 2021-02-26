@@ -4,17 +4,26 @@
 \alias{fitDeltaGLM}
 \title{This function writes, and optionally runs the model in the BUGS/JAGS framework}
 \usage{
-fitDeltaGLM(datalist = NULL, modelStructure = list(StrataYear.positiveTows =
-  "random", VesselYear.positiveTows = "random", StrataYear.zeroTows = "random",
-  VesselYear.zeroTows = "random", Vessel.positiveTows = "zero", Vessel.zeroTows
-  = "zero", Catchability.positiveTows = "one", Catchability.zeroTows = "zero",
-  year.deviations = "uncorrelated", strata.deviations = "uncorrelated"),
+fitDeltaGLM(
+  datalist = NULL,
+  modelStructure = list(StrataYear.positiveTows = "random", VesselYear.positiveTows =
+    "random", StrataYear.zeroTows = "random", VesselYear.zeroTows = "random",
+    Vessel.positiveTows = "zero", Vessel.zeroTows = "zero", Catchability.positiveTows =
+    "one", Catchability.zeroTows = "zero", year.deviations = "uncorrelated",
+    strata.deviations = "uncorrelated"),
   covariates = list(positive = FALSE, binomial = FALSE),
-  likelihood = "gamma", model.name = "deltaGLM.txt", fit.model = TRUE,
-  write.model = TRUE, mcmc.control = list(chains = 5, thin = 1, burn = 5000,
-  iterToSave = 2000), Parallel = TRUE, Species = "NULL",
-  logitBounds = c(-20, 20), logBounds = c(-20, 20), prior.scale = rep(25,
-  6), dgammaNum = 0.001)
+  likelihood = "gamma",
+  model.name = "deltaGLM.txt",
+  fit.model = TRUE,
+  write.model = TRUE,
+  mcmc.control = list(chains = 5, thin = 1, burn = 5000, iterToSave = 2000),
+  Parallel = TRUE,
+  Species = "NULL",
+  logitBounds = c(-20, 20),
+  logBounds = c(-20, 20),
+  prior.scale = rep(25, 6),
+  dgammaNum = 0.001
+)
 }
 \arguments{
 \item{datalist}{List of data passed in}

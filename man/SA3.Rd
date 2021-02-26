@@ -4,7 +4,8 @@
 \name{SA3}
 \alias{SA3}
 \title{Haul characteristics for 1756 hauls.}
-\format{A data frame with 1756 rows and 7 variables:
+\format{
+A data frame with 1756 rows and 7 variables:
 \describe{
 \item{SUBAREA_ID}{area ID}
 \item{MIN_DEPTH_M}{minimum haul depth}
@@ -14,7 +15,8 @@
 \item{MIN_LAT_DD}{minimum latitude}
 \item{MAX_LAT_DD}{maximum latitude}
 ...
-}}
+}
+}
 \usage{
 SA3
 }

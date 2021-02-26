@@ -12,7 +12,7 @@ Depends: R (>= 3.1.0), R2jags, devtools
 License: GPL (>=3)
 LazyData: true
 BuildVignettes: yes
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests:
     knitr,

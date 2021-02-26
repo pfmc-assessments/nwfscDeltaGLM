@@ -4,8 +4,13 @@
 \alias{processData}
 \title{Process raw haul data}
 \usage{
-processData(masterDat = NULL, Truncate = 0, strata.limits = NULL,
-  X.pos = NULL, X.bin = NULL)
+processData(
+  masterDat = NULL,
+  Truncate = 0,
+  strata.limits = NULL,
+  X.pos = NULL,
+  X.bin = NULL
+)
 }
 \arguments{
 \item{masterDat}{Data frame with raw haul data}

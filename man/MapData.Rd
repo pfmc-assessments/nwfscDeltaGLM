@@ -4,8 +4,7 @@
 \alias{MapData}
 \title{Plot tows on a map. This function produces a plot (originally designed by John Wallace) showing tows in strata by depth and latitude. If a folder name is given a plot called TowMap.jpg is created.}
 \usage{
-MapData(Data, strata.limits, SA = SA3, FileName = "TowMap.jpg",
-  Folder = NULL)
+MapData(Data, strata.limits, SA = SA3, FileName = "TowMap.jpg", Folder = NULL)
 }
 \arguments{
 \item{Data}{The data frame storing raw tow data}

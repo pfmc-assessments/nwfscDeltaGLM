@@ -4,8 +4,16 @@
 \alias{ComputeIndices}
 \title{Compute index of abundance}
 \usage{
-ComputeIndices(Data, Model, FileName, maxDims = 6, Folder = NA,
-  Weights = "StrataAreas", StrataTable, PlotStrataYearMcmc = TRUE)
+ComputeIndices(
+  Data,
+  Model,
+  FileName,
+  maxDims = 6,
+  Folder = NA,
+  Weights = "StrataAreas",
+  StrataTable,
+  PlotStrataYearMcmc = TRUE
+)
 }
 \arguments{
 \item{Data}{The data to be fit}

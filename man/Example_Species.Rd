@@ -4,7 +4,8 @@
 \name{Example_Species}
 \alias{Example_Species}
 \title{Haul characteristics for 4475 hauls.}
-\format{A data frame with 4475 rows and 7 variables:
+\format{
+A data frame with 4475 rows and 7 variables:
 \describe{
 \item{X1}{unique row ID}
 \item{OP_CODE}{ID code that includes year, vessel, survey id}
@@ -17,7 +18,8 @@
 \item{EXPANDED_WT_KG}{expanded weight, in kg}
 \item{NUMBER_FISH}{number of fish sampled}
 ...
-}}
+}
+}
 \usage{
 Example_Species
 }

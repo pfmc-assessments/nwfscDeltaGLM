@@ -4,8 +4,17 @@
 \alias{ConvergencePlot}
 \title{Compute MLE index of abundance}
 \usage{
-ConvergencePlot(McmcArray, maxDims = 8, parToMonitor, parnames,
-  Nkeep = 5000, FileName, Type = "Trace", Folder = NA, Model)
+ConvergencePlot(
+  McmcArray,
+  maxDims = 8,
+  parToMonitor,
+  parnames,
+  Nkeep = 5000,
+  FileName,
+  Type = "Trace",
+  Folder = NA,
+  Model
+)
 }
 \arguments{
 \item{McmcArray}{The array of MCMC output}

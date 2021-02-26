@@ -4,12 +4,14 @@
 \name{AFSCforeign_hauls}
 \alias{AFSCforeign_hauls}
 \title{AFSC Haul join characteristics for 409 hauls.}
-\format{A data frame with 409 rows and 2 variables:
+\format{
+A data frame with 409 rows and 2 variables:
 \describe{
 \item{HAULJOIN}{unique row ID}
 \item{Jurisdctn}{jurisdiction id}
 ...
-}}
+}
+}
 \usage{
 AFSCforeign_hauls
 }

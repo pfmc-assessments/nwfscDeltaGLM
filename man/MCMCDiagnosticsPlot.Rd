@@ -4,8 +4,13 @@
 \alias{McmcDiagnosticsPlot}
 \title{Gelman-Rubin diagnostics. This function does MCMC diagnostics, producing several plots related to Gelman diagnostics, and optionally a plot for the Geweke statistics (though this doesn't converge sometimes)}
 \usage{
-McmcDiagnosticsPlot(McmcList, parToMonitor, FileName = "", Folder = NA,
-  Geweke = FALSE)
+McmcDiagnosticsPlot(
+  McmcList,
+  parToMonitor,
+  FileName = "",
+  Folder = NA,
+  Geweke = FALSE
+)
 }
 \arguments{
 \item{McmcList}{An MCMC list object of model parameters}
