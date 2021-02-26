@@ -1,6 +1,4 @@
-  <!-- badges: start -->
-  [![R-CMD-check](https://github.com/nwfsc-assess/nwfscDeltaGLM/workflows/R-CMD-check/badge.svg)](https://github.com/nwfsc-assess/nwfscDeltaGLM/actions)
-  <!-- badges: end -->
+
 Description
 =============
 
