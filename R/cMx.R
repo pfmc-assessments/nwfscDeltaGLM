@@ -4,6 +4,6 @@
 #' @return Matrix object
 #'
 #'
-cMx = function(Input) {
+cMx <- function(Input) {
   as.matrix(Input)
 }

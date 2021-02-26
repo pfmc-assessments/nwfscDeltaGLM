@@ -4,7 +4,7 @@ author: "NWFSC-assess"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{nwfscDeltaGLM-simulation}
+  %\VignetteIndexEntry{Package nwfscDeltaGLM: simulation example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

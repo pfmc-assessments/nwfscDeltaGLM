@@ -4,7 +4,7 @@ author: "NWFSC-assess"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{nwfscDeltaGLM-example}
+  %\VignetteIndexEntry{Package nwfscDeltaGLM}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -79,13 +79,14 @@ modelStructure1 = list("StrataYear.positiveTows"="fixed", "VesselYear.positiveTo
 ### Run model 
 Create a list that could be used to hold additional models,
 
-```{r}
+```{r eval=FALSE}
 fitted_models = list()
-fitted_models[[1]] = fitDeltaGLM(datalist = DataList, modelStructure=modelStructure1, mcmc.control=mcmc.control, Species=species)
+fitted_models[[1]] = fitDeltaGLM(datalist = DataList, 
+  modelStructure=modelStructure1, mcmc.control=mcmc.control, Species=species)
 ```
 
 ## Process MCMC output
-```{r mcmcdiag}
+```{r mcmcdiag, eval=FALSE}
 # Make sure that Data is attached prior to running
 data(SA3)
 doMCMCDiags(datalist=DataList, mods=fitted_models, strata.limits=strata.limits)
