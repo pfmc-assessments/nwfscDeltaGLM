@@ -73,7 +73,16 @@ DataList = processData(masterDat = masterDat, strata.limits = strata.limits)
 ```{r}
 mcmc.control = list(chains=1, thin=1, burnin=10, iterToSave=20)
 
-modelStructure1 = list("StrataYear.positiveTows"="fixed", "VesselYear.positiveTows"="zero", "Vessel.positiveTows"="zero", "StrataYear.zeroTows"="fixed", "VesselYear.zeroTows"="zero", "Vessel.zeroTows"="zero", "Catchability.positiveTows"="one", "Catchability.zeroTows"="zero", "year.deviations"="fixed", "strata.deviations"="fixed")
+modelStructure1 = list("StrataYear.positiveTows"="fixed", 
+          "VesselYear.positiveTows"="zero",
+          "Vessel.positiveTows"="zero",
+          "StrataYear.zeroTows"="fixed",
+          "VesselYear.zeroTows"="zero",
+          "Vessel.zeroTows"="zero",
+          "Catchability.positiveTows"="one",
+          "Catchability.zeroTows"="zero",
+          "year.deviations"="fixed",
+          "strata.deviations"="fixed")
 ```
 
 ### Run model 
@@ -82,14 +91,18 @@ Create a list that could be used to hold additional models,
 ```{r eval=FALSE}
 fitted_models = list()
 fitted_models[[1]] = fitDeltaGLM(datalist = DataList, 
-  modelStructure=modelStructure1, mcmc.control=mcmc.control, Species=species)
+  modelStructure=modelStructure1, 
+  mcmc.control=mcmc.control, 
+  Species=species)
 ```
 
 ## Process MCMC output
 ```{r mcmcdiag, eval=FALSE}
 # Make sure that Data is attached prior to running
 data(SA3)
-doMCMCDiags(datalist=DataList, mods=fitted_models, strata.limits=strata.limits)
+doMCMCDiags(datalist=DataList, 
+            mods=fitted_models,
+            strata.limits=strata.limits)
 ```
 
 
