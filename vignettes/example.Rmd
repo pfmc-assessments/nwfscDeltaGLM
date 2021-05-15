@@ -11,7 +11,7 @@ vignette: >
 
 ## Install package and set working directory
 
-```{r install}
+```{r install, warning=FALSE,message=FALSE}
 # Install package
 install.packages("devtools", repos = "http://cran.us.r-project.org")
 library("devtools")
