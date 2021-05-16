@@ -9,11 +9,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include=FALSE, warning=FALSE,message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 ## Install package and set working directory
 
-```{r install, warning=FALSE,message=FALSE}
+```{r install, results="hide"}
 # Install package
-install.packages("devtools", repos = "http://cran.us.r-project.org")
 library("devtools")
 install_github("nwfsc-assess/nwfscDeltaGLM")
   
@@ -26,14 +29,14 @@ library(nwfscDeltaGLM)
 There's three files needed to run the deltaGLM code. The package includes several that have been used as defaults for west coast assessments. It is critical that any new data used by the package have the same column names.
 
 First, \code{SA3} contains the area, in hectares of 1756 strata, defined by the latitude and longitude (in decimal degrees), depth (in meters). Each strata also has an associated area, in hectares. These individual areas are summed up to define areas for boundaries chosen by the user.  
-```{r}
+```{r loaddata}
 data(SA3)
 ```
 
 Second, a \code{strata.limits} data frame needs to be defined, with names \code{NLat} (the northern boundary), \code{SLat} (the southern boundary), \code{MinDepth} (the minimum depth), and \code{MaxDepth} (the maximum depth). An example of generating this data frame is below. 
 Third, a data frame with raw haul data for an individual species needs to be defined. We provide an example in the \code{Example_Species} object. 
 
-```{r}
+```{r names}
 data(Example_Species)
 names(Example_Species)
 ```
@@ -54,7 +57,7 @@ strata.limits = data.frame("STRATA" = c("First", "Second", "Mid", "D", "South"),
 ```
 
 ### Modify species names
-```{r}
+```{r namespecies}
 names(masterDat)
 
 species = "Example_Species"
@@ -63,14 +66,14 @@ names(masterDat)[which(names(masterDat)=="EXPANDED_WT_KG")] = "Example_Species"
 
 ## Run data processing function
 This looks for an object named \code{masterDat} in the global environment,
-```{r}
+```{r process}
 DataList = processData(masterDat = masterDat, strata.limits = strata.limits)
 ```
 
 ## Run model
 
 ### Define settings for this run
-```{r}
+```{r mcmc}
 mcmc.control = list(chains=1, thin=1, burnin=10, iterToSave=20)
 
 modelStructure1 = list("StrataYear.positiveTows"="fixed", 
@@ -88,16 +91,18 @@ modelStructure1 = list("StrataYear.positiveTows"="fixed",
 ### Run model 
 Create a list that could be used to hold additional models,
 
-```{r eval=FALSE}
+```{r fitmodel, eval=TRUE}
 fitted_models = list()
 fitted_models[[1]] = fitDeltaGLM(datalist = DataList, 
   modelStructure=modelStructure1, 
   mcmc.control=mcmc.control, 
   Species=species)
+
+names(fitted_models[[1]])
 ```
 
 ## Process MCMC output
-```{r mcmcdiag, eval=FALSE}
+```{r mcmcdiag, eval=TRUE}
 # Make sure that Data is attached prior to running
 data(SA3)
 doMCMCDiags(datalist=DataList, 
