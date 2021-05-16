@@ -109,6 +109,9 @@ processData <- function(masterDat = NULL, Truncate = 0, strata.limits = NULL, X.
   # Redefine variables that depend on year
   Data[, "year"] <- factor(as.numeric(as.character(Data[, "year"]))) # Record year factor in case years have been eliminated due to missing observations
   Data <- data.frame(Data, "vessel" = Letters[as.numeric(as.factor(as.character(Data[, "VESSEL"])))]) # Record year factor in case years have been eliminated due to missing observations
+  # Coerce vessel and strata to factors
+  Data$vessel = as.factor(Data$vessel)
+  Data$strata = factor(as.character(Data$strata))
   # Define derived variables involving year
   Data <- cbind(Data, "strataYear" = factor(paste(Data[, "strata"], ":", Data[, "year"], sep = ""), levels = as.vector(outer(sort(unique(Data[, "strata"])), sort(unique(Data[, "year"])), FUN = paste, sep = ":"))))
   Data <- cbind(Data, "vesselYear" = factor(paste(Data[, "vessel"], ":", Data[, "year"], sep = "")))
