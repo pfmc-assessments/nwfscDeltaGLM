@@ -159,7 +159,7 @@ doMCMCDiags <- function(datalist, strata.limits, directory, mods, StrataWeights 
     Indices[, ModelNumber, 1] <- McmcIndices$byYear$IndexMean
     Indices[, ModelNumber, 2] <- McmcIndices$byYear$SdLog
     for (StratI in 1:nlevels(strata)) {
-      Which <- which(McmcIndices$byYearAndStrata$Strata == levels(McmcIndices$byYearAndStrata$Strata)[StratI])
+      Which <- which(McmcIndices$byYearAndStrata$Strata == levels(as.factor(McmcIndices$byYearAndStrata$Strata))[StratI])
       IndicesByStrata[, StratI, ModelNumber, 1] <- McmcIndices$byYearAndStrata$IndexMean[Which]
       IndicesByStrata[, StratI, ModelNumber, 2] <- McmcIndices$byYearAndStrata$SdLog[Which]
     }

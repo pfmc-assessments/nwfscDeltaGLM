@@ -3,7 +3,6 @@
 export(ComputeIndices)
 export(ComputeMleIndices)
 export(ConvergencePlot)
-export(LoadFn)
 export(MapData)
 export(McmcDiagnosticsPlot)
 export(PlotData)
