@@ -2,7 +2,7 @@
 # Install package
 install.packages("devtools", repos = "http://cran.us.r-project.org")
 library("devtools")
-install_github("nwfsc-assess/nwfscDeltaGLM")
+install_github("pfmc-assessments/nwfscDeltaGLM")
   
 # Load package
 library(nwfscDeltaGLM)

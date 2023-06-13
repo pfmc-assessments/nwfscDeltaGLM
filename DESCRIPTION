@@ -18,5 +18,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://github.com/nwfsc-assess/nwfscDeltaGLM
-BugReports: https://github.com/nwfsc-assess/nwfscDeltaGLM/issues
+URL: https://github.com/pfmc-assessments/nwfscDeltaGLM
+BugReports: https://github.com/pfmc-assessments/nwfscDeltaGLM/issues

@@ -1,6 +1,6 @@
 ---
 title: "Package nwfscDeltaGLM: simulation example"
-author: "NWFSC-assess"
+author: "pfmc-assessments"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -15,7 +15,7 @@ vignette: >
 # Install package
 install.packages("devtools", repos = "http://cran.us.r-project.org")
 library("devtools")
-install_github("nwfsc-assess/nwfscDeltaGLM")
+install_github("pfmc-assessments/nwfscDeltaGLM")
   
 # Load package
 library(nwfscDeltaGLM)

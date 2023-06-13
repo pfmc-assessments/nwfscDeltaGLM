@@ -19,13 +19,13 @@ Next, please use R version >=3.1.1 and install the package:
     install.packages("devtools")
     library("devtools")
     # Current releases can be installed with
-    install_github("nwfsc-assess/nwfscDeltaGLM")
+    install_github("pfmc-assessments/nwfscDeltaGLM")
     # Specific version can be installed as
-    # install_github("nwfsc-assess/nwfscDeltaGLM", ref="1.0.0") 
+    # install_github("pfmc-assessments/nwfscDeltaGLM", ref="1.0.0") 
     # Load package
     library(nwfscDeltaGLM) 
 
-Please see vignettes folder (i.e., https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/vignettes/example.Rmd) for an example of how to run the model. Or https://github.com/nwfsc-assess/nwfscDeltaGLM/blob/master/vignettes/simulation_example.Rmd for an example of how to simulate and fit some different data structures. 
+Please see vignettes folder (i.e., https://github.com/pfmc-assessments/nwfscDeltaGLM/blob/master/vignettes/example.Rmd) for an example of how to run the model. Or https://github.com/pfmc-assessments/nwfscDeltaGLM/blob/master/vignettes/simulation_example.Rmd for an example of how to simulate and fit some different data structures. 
 
 Known installation/usage issues
 =============

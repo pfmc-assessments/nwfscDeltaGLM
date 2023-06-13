@@ -1,6 +1,6 @@
 ---
 title: "Package nwfscDeltaGLM"
-author: "NWFSC-assess"
+author: "pfmc-assessments"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r install, results="hide"}
 # Install package
 library("devtools")
-install_github("nwfsc-assess/nwfscDeltaGLM")
+install_github("pfmc-assessments/nwfscDeltaGLM")
   
 # Load package
 library(nwfscDeltaGLM)
