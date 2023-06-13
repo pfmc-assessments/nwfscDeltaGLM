@@ -16,13 +16,9 @@ First, please install JAGS (Just Another Gibbs Sampler) here: http://mcmc-jags.s
 Next, please use R version >=3.1.1 and install the package:
 
     # Install package
-    install.packages("devtools")
-    library("devtools")
+    install.packages("pak")
     # Current releases can be installed with
-    install_github("pfmc-assessments/nwfscDeltaGLM")
-    # Specific version can be installed as
-    # install_github("pfmc-assessments/nwfscDeltaGLM", ref="1.0.0") 
-    # Load package
+    pak::pkg_install("pfmc-assessments/nwfscDeltaGLM")
     library(nwfscDeltaGLM) 
 
 Please see vignettes folder (i.e., https://github.com/pfmc-assessments/nwfscDeltaGLM/blob/master/vignettes/example.Rmd) for an example of how to run the model. Or https://github.com/pfmc-assessments/nwfscDeltaGLM/blob/master/vignettes/simulation_example.Rmd for an example of how to simulate and fit some different data structures. 
